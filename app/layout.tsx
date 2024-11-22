@@ -1,3 +1,4 @@
+import { ClerkProvider } from "@clerk/nextjs"
 import type { Metadata } from "next"
 import localFont from "next/font/local"
 import { Toaster } from "sonner"
@@ -30,9 +31,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <DocumentProvider>{children}</DocumentProvider>
+        <ClerkProvider>
+          <DocumentProvider>{children}</DocumentProvider>
 
-        <Toaster richColors />
+          <Toaster richColors />
+        </ClerkProvider>
       </body>
     </html>
   )

@@ -1,7 +1,9 @@
-import { Menu, Bell, ChevronDown, LayoutGrid } from "lucide-react"
+import { UserButton } from "@clerk/nextjs"
+import { Bell, ChevronDown, LayoutGrid, Menu } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
+import { Button } from "./ui/button"
 
 export default function Header() {
   return (
@@ -32,9 +34,9 @@ export default function Header() {
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
 
-          <span className="ml-2 pr-5 text-sm font-medium text-gray-700">
-            Nome do usuário
-          </span>
+          <Button className="ml-2 pr-5 text-sm font-medium text-gray-700">
+            <UserButton showName />
+          </Button>
 
           <ChevronDown />
         </div>

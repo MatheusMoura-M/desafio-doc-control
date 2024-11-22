@@ -1,9 +1,5 @@
-import { db } from "@/app/_lib/prisma"
-import { OrderOrigin, OrderType } from "@prisma/client"
-import { Decimal } from "@prisma/client/runtime/library"
 import { randomUUID as uuid } from "crypto"
 import { promises as fs } from "fs"
-import { revalidatePath } from "next/cache"
 import { NextRequest, NextResponse } from "next/server"
 import path from "path"
 
@@ -43,7 +39,6 @@ export async function DELETE(req: NextRequest) {
   try {
     const { filePath } = await req.json()
 
-    console.log("AAA", filePath)
     if (!filePath) {
       return NextResponse.json(
         { error: "Nenhum arquivo passado" },
