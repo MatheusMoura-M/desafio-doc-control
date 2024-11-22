@@ -9,11 +9,12 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/_components/ui/sheet"
-import { Info } from "lucide-react"
+import { CircleCheck, Info } from "lucide-react"
 import { SetStateAction, useState } from "react"
 import { CalendarForm } from "./calendar-form"
 import { TableProps } from "./tasks/components/data-table-toolbar"
 import { Separator } from "./ui/separator"
+import { toast } from "sonner"
 
 interface FilterSheetProps {
   setDocumentName: React.Dispatch<SetStateAction<string>>
@@ -64,6 +65,12 @@ export const FilterSheet = <TData,>({
     table.getColumn("emitter")?.setFilterValue(data.issuer)
     table.getColumn("taxValue")?.setFilterValue(data.taxAmount)
     table.getColumn("netValue")?.setFilterValue(data.netAmount)
+
+    toast("Filtro aplicado com sucesso!", {
+      className: "bg-[#05C151] text-white text-sm font-bold",
+      icon: <CircleCheck color="white" size={16} />,
+      duration: 2000,
+    })
   }
 
   return (

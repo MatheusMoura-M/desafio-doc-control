@@ -16,27 +16,7 @@ export async function POST(req: NextRequest) {
     const emitter = formData.get("emitter") as string
     const taxValue = new Decimal(formData.get("taxValue") as string)
     const netValue = new Decimal(formData.get("netValue") as string)
-    const file = formData.get("file")
-
-    let data: ArrayBuffer | undefined
-    let fileUrl = ""
-
-    if (file instanceof File) {
-      data = await file.arrayBuffer()
-
-      if (data) {
-        const directory = path.join(process.cwd(), "upload")
-        await fs.mkdir(directory, { recursive: true })
-
-        const uniqueFileName = `${path.parse(file.name).name}&&${uuid()}&&${path.extname(file.name)}`
-
-        const filePath = path.join(directory, uniqueFileName)
-        await fs.writeFile(filePath, Buffer.from(data))
-        fileUrl = uniqueFileName
-      } else {
-        console.error("Erro: Nenhum dado encontrado no arquivo.")
-      }
-    }
+    const fileUrl = formData.get("fileUrl") as string
 
     if (origin === "Eletrônico") {
       origin = OrderOrigin.ELECTRONIC
@@ -50,8 +30,6 @@ export async function POST(req: NextRequest) {
       type = OrderType.SERVICE_CONTRACT
     }
 
-    console.log("FORM", formData)
-
     const document = await db.document.create({
       data: {
         origin: origin as OrderOrigin,
@@ -62,7 +40,6 @@ export async function POST(req: NextRequest) {
         netValue,
       },
     })
-    console.log("DATA", document)
 
     return new Response(JSON.stringify(document), {
       headers: { "Content-Type": "application/json" },
