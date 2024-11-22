@@ -2,23 +2,23 @@ import { FileCheck, FileText } from "lucide-react"
 
 export const originsDocument = [
   {
-    value: "digitalizado",
+    value: "DIGITALIZED",
     label: "Digitalizado",
   },
   {
-    value: "eletrônico",
+    value: "ELECTRONIC",
     label: "Eletrônico",
   },
 ]
 
 export const typesDocument = [
   {
-    value: "nota fiscal de serviço",
+    value: "SERVICE_NOTE",
     label: "Nota fiscal de serviço",
     icon: FileCheck,
   },
   {
-    value: "contrato de prestação de serviço",
+    value: "SERVICE_CONTRACT",
     label: "Contrato de prestação de serviço",
     icon: FileText,
   },

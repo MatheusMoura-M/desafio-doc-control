@@ -35,12 +35,18 @@ export function DataTableFacetedFilter<TData, TValue>({
   options,
   setState,
 }: DataTableFacetedFilterProps<TData, TValue>) {
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false)
+
   const facets = column?.getFacetedUniqueValues()
   const selectedValues = new Set(column?.getFilterValue() as string[])
   const [titleInput, setTitleInput] = useState("Selecione")
 
+  const handleSheetOpenChange = (isOpen: boolean) => {
+    setIsPopoverOpen(isOpen)
+  }
+
   return (
-    <Popover>
+    <Popover open={isPopoverOpen} onOpenChange={handleSheetOpenChange}>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
@@ -52,7 +58,7 @@ export function DataTableFacetedFilter<TData, TValue>({
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent className="w-[200px] bg-white p-0" align="start">
+      <PopoverContent className="w-[320px] bg-white p-0" align="start">
         <Command>
           <CommandInput placeholder={title} />
 
@@ -60,7 +66,7 @@ export function DataTableFacetedFilter<TData, TValue>({
             <CommandList>
               <CommandEmpty>No results found.</CommandEmpty>
 
-              <CommandGroup>
+              <CommandGroup className="p-0 py-1">
                 {options.map((option) => {
                   const isSelected = selectedValues.has(option.value)
                   return (
@@ -74,6 +80,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                         }
 
                         setTitleInput(option.label)
+
                         const filterValues = Array.from(selectedValues)
                         column?.setFilterValue(
                           filterValues.length ? filterValues : undefined,
@@ -82,7 +89,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                     >
                       <div
                         className={cn(
-                          "mr-2 flex h-4 w-4 items-center justify-center rounded-full border border-black",
+                          "flex h-4 w-4 items-center justify-center rounded-full border border-black",
                           isSelected
                             ? "bg-black text-white"
                             : "opacity-50 [&_svg]:invisible",
@@ -91,7 +98,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                         <Check />
                       </div>
                       {option.icon && (
-                        <option.icon className="text-muted-foreground mr-2 h-4 w-4" />
+                        <option.icon className="text-muted-foreground h-4 w-4" />
                       )}
                       <span>{option.label}</span>
                       {facets?.get(option.value) && (
@@ -131,12 +138,13 @@ export function DataTableFacetedFilter<TData, TValue>({
                       onSelect={() => {
                         setState!(option.label)
                         setTitleInput(option.label)
+                        setIsPopoverOpen(false)
                       }}
                     >
                       <div
                         className={cn(
                           "mr-2 flex h-4 w-4 items-center justify-center rounded-full border border-black",
-                          titleInput.toLocaleLowerCase() === option.value
+                          titleInput === option.label
                             ? "bg-black text-white"
                             : "opacity-50 [&_svg]:invisible",
                         )}

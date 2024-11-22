@@ -60,10 +60,10 @@ export const FilterSheet = <TData,>({
       netAmount: netAmount,
     }
 
-    table.getColumn("tipo_documental")?.setFilterValue(data.documentType)
-    table.getColumn("emitente")?.setFilterValue(data.issuer)
-    table.getColumn("valor_total_dos_tributos")?.setFilterValue(data.taxAmount)
-    table.getColumn("valor_liquido")?.setFilterValue(data.netAmount)
+    table.getColumn("type")?.setFilterValue(data.documentType)
+    table.getColumn("emitter")?.setFilterValue(data.issuer)
+    table.getColumn("taxValue")?.setFilterValue(data.taxAmount)
+    table.getColumn("netValue")?.setFilterValue(data.netAmount)
   }
 
   return (

@@ -8,11 +8,11 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/_components/ui/dropdown-menu"
 import { documentSchema } from "../data/schema"
+import { useDocuments } from "@/app/_context/document"
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
@@ -23,6 +23,21 @@ export function DataTableRowActions<TData>({
 }: DataTableRowActionsProps<TData>) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const task = documentSchema.parse(row.original)
+  const { setDocuments } = useDocuments()
+
+  const handleDelete = async (id: string) => {
+    try {
+      await fetch(`/api/document/${id}`, {
+        method: "DELETE",
+      })
+
+      setDocuments((prevDocuments) =>
+        prevDocuments.filter((doc) => doc.id !== id),
+      )
+    } catch (error) {
+      console.error("Erro ao excluir documento:", error)
+    }
+  }
 
   return (
     <DropdownMenu>
@@ -47,7 +62,10 @@ export function DataTableRowActions<TData>({
           Visualizar
         </DropdownMenuItem>
 
-        <DropdownMenuItem className="h-1/2 cursor-pointer py-0">
+        <DropdownMenuItem
+          className="h-1/2 cursor-pointer py-0"
+          onClick={() => handleDelete(task.id)}
+        >
           <DropdownMenuShortcut className="opacity-100">
             <Trash size={14} color="black" />
           </DropdownMenuShortcut>

@@ -28,15 +28,3 @@ export async function GET() {
     return new Response(`Erro ao carregar dados: ${error}`, { status: 500 })
   }
 }
-
-export async function POST(req: NextRequest) {
-  try {
-    console.log("AAAAAAAAAAAAA", req)
-    return new Response(JSON.stringify({ message: "ok" }), {
-      headers: { "Content-Type": "application/json" },
-    })
-  } catch (error) {
-    console.error(error)
-    return new Response(`Erro ao carregar dados: ${error}`, { status: 500 })
-  }
-}

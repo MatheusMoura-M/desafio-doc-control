@@ -28,27 +28,27 @@ export function DataTableToolbar<TData>({
   return (
     <div className="flex items-center justify-between">
       <div className="ml-[1px] mt-[5px] flex flex-1 items-center space-x-2">
-        {table.getColumn("origem_do_documento") && (
+        {table.getColumn("origin") && (
           <div className="flex flex-col gap-2">
             <Label className="flex items-center gap-2">
               Origem do documento <CircleHelp size={14} color="gray" />
             </Label>
 
             <DataTableFacetedFilter
-              column={table.getColumn("origem_do_documento")}
+              column={table.getColumn("origin")}
               title="Origem do Documento"
               options={originsDocument}
             />
           </div>
         )}
-        {table.getColumn("tipo_documental") && (
+        {table.getColumn("type") && (
           <div className="flex flex-col gap-2">
             <Label className="flex items-center gap-2">
               Tipo documental <CircleHelp size={14} color="gray" />
             </Label>
 
             <DataTableFacetedFilter
-              column={table.getColumn("tipo_documental")}
+              column={table.getColumn("type")}
               title="Tipo Documental"
               options={typesDocument}
             />
@@ -56,14 +56,13 @@ export function DataTableToolbar<TData>({
         )}
         {isFiltered && (
           <Button
-            variant="ghost"
             onClick={() => {
               table.resetColumnFilters()
               setDocumentName("")
             }}
-            className="h-8 px-2 lg:px-3"
+            className="mt-6 h-8 gap-1 border border-[#e5e7eb] px-2"
           >
-            Reset
+            Limpar
             <X />
           </Button>
         )}

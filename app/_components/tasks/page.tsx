@@ -1,20 +1,24 @@
+"use client"
+
 import Image from "next/image"
 
 import { columns } from "./components/columns"
 import { DataTable } from "./components/data-table"
 // import { UserNav } from "./components/user-nav"
 import { useEffect, useState } from "react"
+import { getAllDocuments } from "@/app/_actions/get-all-documents"
+import { useDocuments } from "@/app/_context/document"
 
-export default function DataTablePage() {
-  const [tasks, setTasks] = useState([])
+const DataTablePage = () => {
   const [loading, setLoading] = useState(true)
+  const { documents, setDocuments } = useDocuments()
 
   useEffect(() => {
     async function fetchTasks() {
       try {
-        const response = await fetch("/api/tasks")
-        const data = await response.json()
-        setTasks(data)
+        const allDocuments = await getAllDocuments()
+
+        setDocuments(allDocuments)
       } catch (error) {
         console.error("Erro ao carregar tarefas:", error)
       } finally {
@@ -22,7 +26,7 @@ export default function DataTablePage() {
       }
     }
     fetchTasks()
-  }, [])
+  }, [setDocuments])
 
   return (
     <>
@@ -44,8 +48,10 @@ export default function DataTablePage() {
       </div>
 
       <div className="hidden h-full flex-1 flex-col space-y-8 md:flex">
-        <DataTable data={tasks} columns={columns} loading={loading} />
+        <DataTable data={documents} columns={columns} loading={loading} />
       </div>
     </>
   )
 }
+
+export default DataTablePage

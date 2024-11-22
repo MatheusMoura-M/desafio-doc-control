@@ -14,15 +14,18 @@ import { CircleHelp, FileUp } from "lucide-react"
 import { useState } from "react"
 import { DataTableFacetedFilter } from "./tasks/components/data-table-faceted-filter"
 import { originsDocument, typesDocument } from "./tasks/data/data"
-import { createDocument } from "../_actions/create-document"
+import { useDocuments } from "../_context/document"
+import { getAllDocuments } from "../_actions/get-all-documents"
 
 export const CreateDocumentoModal = () => {
+  const { setDocuments } = useDocuments()
+
   const [documentSource, setDocumentSource] = useState<string>("")
   const [documentType, setDocumentType] = useState<string>("")
-  const [file, setFile] = useState<File | null>(null)
+  const [file, setFile] = useState<File | Blob>()
   const [issuer, setIssuer] = useState<string>("")
-  const [taxAmount, setTaxAmount] = useState<string>("")
-  const [netAmount, setNetAmount] = useState<string>("")
+  const [taxValue, setTaxValue] = useState<number>(0)
+  const [netValue, setNetValue] = useState<number>(0)
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -31,45 +34,21 @@ export const CreateDocumentoModal = () => {
   }
 
   const handleSubmit = async () => {
-    if (
-      documentSource &&
-      documentType &&
-      file &&
-      issuer &&
-      taxAmount &&
-      netAmount
-    ) {
-      //   const data = {
-      //     origin: documentSource,
-      //     type: documentType,
-      //     file: file,
-      //     emitter: issuer,
-      //     taxAmount,
-      //     netAmount,
-      //   }
+    const formData = new FormData()
+    formData.append("origin", documentSource)
+    formData.append("type", documentType)
+    formData.append("file", file!)
+    formData.append("emitter", issuer)
+    formData.append("taxValue", taxValue.toString())
+    formData.append("netValue", netValue.toString())
 
-      try {
-        const formData = new FormData()
-        formData.append("documentSource", documentSource)
-        formData.append("documentType", documentType)
-        formData.append("file", file)
-        formData.append("issuer", issuer)
-        formData.append("taxAmount", taxAmount)
-        formData.append("netAmount", netAmount)
+    await fetch("/api/document", {
+      method: "POST",
+      body: formData,
+    })
 
-        const response = await fetch("/api/tasks", {
-          method: "POST",
-          body: formData,
-        })
-
-        console.log("resp", await response.json())
-        // await createDocument(data)
-      } catch (error) {
-        console.error("EERRRORRR", error)
-      }
-    } else {
-      alert("Por favor, preencha todos os campos.")
-    }
+    const updatedDocuments = await getAllDocuments()
+    setDocuments(updatedDocuments)
   }
 
   return (
@@ -111,10 +90,11 @@ export const CreateDocumentoModal = () => {
           </Label>
           <Input
             id="name"
-            value={taxAmount}
+            type="number"
+            value={taxValue}
             placeholder="Valor em R$"
             className="col-span-3"
-            onChange={(e) => setTaxAmount(e.target.value)}
+            onChange={(e) => setTaxValue(Number(e.target.value))}
           />
         </div>
 
@@ -124,10 +104,11 @@ export const CreateDocumentoModal = () => {
           </Label>
           <Input
             id="name"
-            value={netAmount}
+            type="number"
+            value={netValue}
             placeholder="Valor em R$"
             className="col-span-3"
-            onChange={(e) => setNetAmount(e.target.value)}
+            onChange={(e) => setNetValue(Number(e.target.value))}
           />
         </div>
 
@@ -188,7 +169,7 @@ export const CreateDocumentoModal = () => {
             </label>
           </div>
 
-          {file && (
+          {file && file instanceof File && (
             <p className="mt-2 text-sm text-gray-600">Arquivo: {file.name}</p>
           )}
         </div>
@@ -202,7 +183,9 @@ export const CreateDocumentoModal = () => {
           <Button variant="outline">Cancelar</Button>
         </DialogClose>
 
-        <Button onClick={handleSubmit}>Criar documento</Button>
+        <DialogClose asChild>
+          <Button onClick={handleSubmit}>Criar documento</Button>
+        </DialogClose>
       </DialogFooter>
     </DialogContent>
   )

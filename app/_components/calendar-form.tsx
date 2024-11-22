@@ -1,29 +1,27 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { ptBR } from "date-fns/locale"
 import { format } from "date-fns"
+import { ptBR } from "date-fns/locale"
 import { CalendarIcon } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { cn } from "@/_lib/utils"
 import { Button } from "@/_components/ui/button"
 import { Calendar } from "@/_components/ui/calendar"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@/_components/ui/form"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/_components/ui/popover"
+import { cn } from "@/_lib/utils"
 
 const FormSchema = z.object({
   dob: z.date({

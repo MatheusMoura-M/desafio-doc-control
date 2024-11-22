@@ -49,8 +49,8 @@ export function DataTable<TData, TValue>({
 
   const [rowSelection, setRowSelection] = useState({})
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
-    origem_do_documento: false,
-    tipo_documental: false,
+    origin: false,
+    type: false,
   })
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [sorting, setSorting] = useState<SortingState>([])
@@ -80,7 +80,7 @@ export function DataTable<TData, TValue>({
   const handleDocumentNameChange = (value: string) => {
     setDocumentName(value)
 
-    table.getColumn("nome_documento")?.setFilterValue(value)
+    table.getColumn("fileUrl")?.setFilterValue(value)
   }
 
   return (
@@ -88,7 +88,7 @@ export function DataTable<TData, TValue>({
       <div className="flex items-center justify-between space-y-2">
         <div>
           <h1 className="text-xl font-semibold text-gray-800">Documentos</h1>
-          <p className="text-sm text-gray-500">
+          <p className="truncate text-sm text-gray-500">
             Crie, gerencie e visualize os documentos
           </p>
         </div>
@@ -190,7 +190,22 @@ export function DataTable<TData, TValue>({
                   </TableCell>
                   <TableCell className="p-2">
                     <span className="block">nº de emitentes</span>
-                    <p>{table.getRowModel().rows.length} documentos</p>
+
+                    <p>
+                      {
+                        [
+                          ...new Set(
+                            table
+                              .getRowModel()
+                              .rows.map(
+                                (row) =>
+                                  (row.original as { emitter: string }).emitter,
+                              ),
+                          ),
+                        ].length
+                      }
+                      documentos
+                    </p>
                   </TableCell>
                   <TableCell className="p-2">
                     <span className="block">Total de tributos</span>
@@ -203,9 +218,9 @@ export function DataTable<TData, TValue>({
                             parseFloat(
                               (
                                 row.original as {
-                                  valor_total_dos_tributos: string
+                                  taxValue: string
                                 }
-                              ).valor_total_dos_tributos,
+                              ).taxValue,
                             ) || 0
 
                           return sum + valor
@@ -226,9 +241,9 @@ export function DataTable<TData, TValue>({
                             parseFloat(
                               (
                                 row.original as {
-                                  valor_liquido: string
+                                  netValue: string
                                 }
-                              ).valor_liquido,
+                              ).netValue,
                             ) || 0
 
                           return sum + valor
@@ -245,6 +260,7 @@ export function DataTable<TData, TValue>({
               </TableFooter>
             </Table>
           </div>
+
           <DataTablePagination table={table} />
         </div>
       )}
