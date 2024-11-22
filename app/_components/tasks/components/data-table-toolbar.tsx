@@ -4,8 +4,6 @@ import { Table } from "@tanstack/react-table"
 import { CircleHelp, Plus, X } from "lucide-react"
 
 import { Button } from "@/_components/ui/button"
-// import { DataTableViewOptions } from "./data-table-view-options"
-
 import { originsDocument, typesDocument } from "../data/data"
 import { DataTableFacetedFilter } from "./data-table-faceted-filter"
 import { Label } from "@/_components/ui/label"
@@ -78,7 +76,6 @@ export function DataTableToolbar<TData>({
 
         <CreateDocumentoModal />
       </Dialog>
-      {/* <DataTableViewOptions table={table} /> */}
     </div>
   )
 }

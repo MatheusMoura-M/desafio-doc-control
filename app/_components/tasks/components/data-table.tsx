@@ -119,10 +119,6 @@ export function DataTable<TData, TValue>({
             <FilterSheet table={table} setDocumentName={setDocumentName} />
           </Sheet>
         </div>
-
-        {/* <div className="flex items-center space-x-2">
-            <UserNav />
-          </div> */}
       </div>
 
       {loading ? (

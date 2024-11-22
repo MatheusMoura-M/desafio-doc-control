@@ -4,7 +4,6 @@ import Image from "next/image"
 
 import { columns } from "./components/columns"
 import { DataTable } from "./components/data-table"
-// import { UserNav } from "./components/user-nav"
 import { useEffect, useState } from "react"
 import { getAllDocuments } from "@/app/_actions/get-all-documents"
 import { useDocuments } from "@/app/_context/document"
