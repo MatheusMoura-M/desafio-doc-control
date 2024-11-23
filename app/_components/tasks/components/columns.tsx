@@ -79,6 +79,7 @@ export const columns: ColumnDef<Document>[] = [
 
       return cellValue.startsWith(filterValue)
     },
+    sortingFn: "alphanumeric",
   },
   {
     accessorKey: "netValue",
@@ -101,6 +102,7 @@ export const columns: ColumnDef<Document>[] = [
       const cellValue = String(row.getValue(columnId))
       return cellValue.startsWith(filterValue)
     },
+    sortingFn: "alphanumeric",
   },
   {
     accessorKey: "createdAt",
@@ -121,7 +123,9 @@ export const columns: ColumnDef<Document>[] = [
 
       return rowDate === filterDate
     },
+    sortingFn: "datetime",
   },
+
   {
     accessorKey: "updatedAt",
     header: ({ column }) => (
@@ -135,7 +139,9 @@ export const columns: ColumnDef<Document>[] = [
 
       return <span>{formattedDate}</span>
     },
+    sortingFn: "datetime",
   },
+
   {
     accessorKey: "origin",
     header: ({ column }) => (

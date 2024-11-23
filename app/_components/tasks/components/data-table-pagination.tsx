@@ -4,7 +4,7 @@ import { TableProps } from "./data-table-toolbar"
 export function DataTablePagination<TData>({ table }: TableProps<TData>) {
   return (
     <div className="flex items-center justify-end py-4 md:space-x-2">
-      <div className="text-muted-foreground hidden text-sm md:block">
+      <div className="text-muted-foreground hidden text-sm text-[#9CA3AF] md:block">
         {table.getRowModel().rows.length} de{" "}
         {table.getFilteredRowModel().rows.length}
       </div>

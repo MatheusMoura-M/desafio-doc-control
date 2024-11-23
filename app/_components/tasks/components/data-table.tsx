@@ -49,10 +49,7 @@ export function DataTable<TData, TValue>({
   const [documentName, setDocumentName] = useState("")
 
   const [rowSelection, setRowSelection] = useState({})
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
-    origin: false,
-    type: false,
-  })
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [sorting, setSorting] = useState<SortingState>([])
 
@@ -88,7 +85,7 @@ export function DataTable<TData, TValue>({
     <div className="space-y-4">
       <div className="flex flex-col items-start justify-between space-y-2 md:flex-row md:items-center">
         <div>
-          <h1 className="text-xl font-semibold text-gray-800">Documentos</h1>
+          <h1 className="text-xl font-semibold text-[#3A424E]">Documentos</h1>
           <p className="truncate text-sm text-gray-500">
             Crie, gerencie e visualize os documentos
           </p>
@@ -159,7 +156,10 @@ export function DataTable<TData, TValue>({
                       data-state={row.getIsSelected() && "selected"}
                     >
                       {row.getVisibleCells().map((cell) => (
-                        <TableCell key={cell.id}>
+                        <TableCell
+                          key={cell.id}
+                          className="text-[#3A424E] [&_span]:block [&_span]:w-max"
+                        >
                           {flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext(),
@@ -184,13 +184,17 @@ export function DataTable<TData, TValue>({
                 <TableRow>
                   <TableCell className="p-2"></TableCell>
                   <TableCell className="p-2">
-                    <span className="block">Total</span>
-                    <p>{table.getRowModel().rows.length} documentos</p>
+                    <span className="block text-xs text-[#6B7280]">Total</span>
+                    <p className="text-[#3A424E]">
+                      {table.getRowModel().rows.length} documentos
+                    </p>
                   </TableCell>
                   <TableCell className="p-2">
-                    <span className="block">nº de emitentes</span>
+                    <span className="block w-max text-xs text-[#6B7280]">
+                      nº de emitentes
+                    </span>
 
-                    <p>
+                    <p className="text-[#3A424E]">
                       {
                         [
                           ...new Set(
@@ -202,13 +206,15 @@ export function DataTable<TData, TValue>({
                               ),
                           ),
                         ].length
-                      }
-                      documentos
+                      }{" "}
+                      emitentes
                     </p>
                   </TableCell>
                   <TableCell className="p-2">
-                    <span className="block">Total de tributos</span>
-                    <p>
+                    <span className="block text-xs text-[#6B7280]">
+                      Total de tributos
+                    </span>
+                    <p className="text-[#3A424E]">
                       R$
                       {table
                         .getRowModel()
@@ -230,8 +236,10 @@ export function DataTable<TData, TValue>({
                     </p>
                   </TableCell>
                   <TableCell className="p-2">
-                    <span className="block">Total valor líquido</span>
-                    <p>
+                    <span className="block text-xs text-[#6B7280]">
+                      Total valor líquido
+                    </span>
+                    <p className="text-[#3A424E]">
                       R$
                       {table
                         .getRowModel()

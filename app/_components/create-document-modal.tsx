@@ -51,6 +51,8 @@ export const CreateDocumentoModal = () => {
         body: formData,
       })
 
+      handleDeleteFile(fileUrl, false)
+
       const url = await resp.json()
       setFileUrl(url)
 
@@ -60,8 +62,10 @@ export const CreateDocumentoModal = () => {
     }
   }
 
-  const handleDeleteFile = async (filePath: string) => {
-    clearStates()
+  const handleDeleteFile = async (filePath: string, condition = true) => {
+    if (condition) {
+      clearStates()
+    }
 
     if (file) {
       try {
@@ -179,7 +183,7 @@ export const CreateDocumentoModal = () => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <Label className="flex items-center gap-2">
+          <Label className="flex items-center gap-2 text-[#3A424E]">
             Origem do documento <CircleHelp size={14} color="gray" />
           </Label>
 
@@ -191,7 +195,7 @@ export const CreateDocumentoModal = () => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <Label className="flex items-center gap-2">
+          <Label className="flex items-center gap-2 text-[#3A424E]">
             Tipo documental <CircleHelp size={14} color="gray" />
           </Label>
 
