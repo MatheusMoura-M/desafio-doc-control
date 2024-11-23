@@ -47,6 +47,7 @@ export const CreateDocumentoModal = () => {
       const formData = new FormData()
       formData.append("file", value)
 
+      console.log("files", event.target.files)
       console.log("FORM", formData)
 
       const resp = await fetch("/api/upload", {
