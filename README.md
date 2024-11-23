@@ -4,7 +4,6 @@
 
 ### Para a execução do projeto siga passo a passo:
 
-## BACKEND
 ### 1️⃣- Faça o clone desse repositório com o seguinte comando:
 
 ```
