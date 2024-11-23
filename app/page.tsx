@@ -6,7 +6,6 @@ import { redirect } from "next/navigation"
 export const Home = async () => {
   const { userId } = await auth()
 
-  console.log("aaaaaaaaaaaaaaa", userId)
   if (!userId) redirect("/login")
   return (
     <>

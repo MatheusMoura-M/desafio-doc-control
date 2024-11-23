@@ -24,6 +24,7 @@ export const FilterSheet = <TData,>({
   table,
   setDocumentName,
 }: FilterSheetProps & TableProps<TData>) => {
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)
   const [documentType, setDocumentType] = useState("")
   const [issuer, setIssuer] = useState("")
   const [taxAmount, setTaxAmount] = useState("")
@@ -59,8 +60,10 @@ export const FilterSheet = <TData,>({
       issuer: issuer,
       taxAmount: taxAmount,
       netAmount: netAmount,
+      date: selectedDate,
     }
 
+    table.getColumn("createdAt")?.setFilterValue(data.date)
     table.getColumn("type")?.setFilterValue(data.documentType)
     table.getColumn("emitter")?.setFilterValue(data.issuer)
     table.getColumn("taxValue")?.setFilterValue(data.taxAmount)
@@ -95,7 +98,10 @@ export const FilterSheet = <TData,>({
         </div>
 
         <div>
-          <CalendarForm />
+          <CalendarForm
+            selectedDate={selectedDate}
+            setSelectedDate={setSelectedDate}
+          />
         </div>
 
         <Separator className="mt-4 bg-[#E5E7EB]" />

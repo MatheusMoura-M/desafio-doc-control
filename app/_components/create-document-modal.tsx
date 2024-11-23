@@ -1,37 +1,37 @@
 import { Button } from "@/_components/ui/button"
 import {
-  Dialog,
   DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/_components/ui/dialog"
 import { Input } from "@/_components/ui/input"
 import { Label } from "@/_components/ui/label"
 import { Separator } from "@/_components/ui/separator"
 import { ArrowRight, CircleHelp, CircleX, FileUp, X } from "lucide-react"
 import { useState } from "react"
+import { toast } from "sonner"
+import { getAllDocuments } from "../_actions/get-all-documents"
+import { useDocuments } from "../_context/document"
 import { DataTableFacetedFilter } from "./tasks/components/data-table-faceted-filter"
 import { originsDocument, typesDocument } from "./tasks/data/data"
-import { useDocuments } from "../_context/document"
-import { getAllDocuments } from "../_actions/get-all-documents"
 import { Progress } from "./ui/progress"
-import { toast } from "sonner"
-import ViewerModalFile from "./viewer-modal-file"
 
 export const CreateDocumentoModal = () => {
-  const { setDocuments } = useDocuments()
-
-  const [showModalViewer, setShowModalViewer] = useState<boolean>(false)
+  const {
+    setDocuments,
+    setShowModalViewer,
+    file,
+    setFile,
+    fileUrl,
+    setFileUrl,
+  } = useDocuments()
 
   const [documentSource, setDocumentSource] = useState<string>("")
   const [documentType, setDocumentType] = useState<string>("")
-  const [file, setFile] = useState<File | Blob | null>(null)
   const [fileSize, setFileSize] = useState<number>(0)
-  const [fileUrl, setFileUrl] = useState<string>("")
   const [issuer, setIssuer] = useState<string>("")
   const [taxValue, setTaxValue] = useState<number>(0)
   const [netValue, setNetValue] = useState<number>(0)
@@ -225,7 +225,7 @@ export const CreateDocumentoModal = () => {
               <input
                 id="file-upload"
                 type="file"
-                // accept=".pdf,.doc,.docx"
+                accept=".pdf,.doc,.docx"
                 onChange={handleFileUpload}
                 className="hidden"
               />
@@ -257,6 +257,7 @@ export const CreateDocumentoModal = () => {
                       onClick={() => {
                         setFile(null)
                         setShowModalViewer(false)
+                        handleDeleteFile(fileUrl)
                       }}
                     />
                   </>
@@ -269,20 +270,16 @@ export const CreateDocumentoModal = () => {
                   </div>
                 )}
               </div>
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button
-                    className="w-max cursor-pointer content-start text-sm text-[#05C151] opacity-50 shadow-none hover:opacity-100"
-                    onClick={() => setShowModalViewer(true)}
-                  >
-                    Pré-visualizar
-                  </Button>
-                </DialogTrigger>
 
-                {showModalViewer && (
-                  <ViewerModalFile fileName={file.name} fileUrl={fileUrl} />
-                )}
-              </Dialog>
+              <Button
+                className="w-max cursor-pointer content-start text-sm text-[#05C151] opacity-50 shadow-none hover:opacity-100"
+                onClick={() => {
+                  setShowModalViewer(true)
+                  setFileUrl(fileUrl)
+                }}
+              >
+                Pré-visualizar
+              </Button>
             </>
           )}
         </div>

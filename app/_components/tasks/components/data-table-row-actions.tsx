@@ -11,8 +11,10 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/_components/ui/dropdown-menu"
-import { documentSchema } from "../data/schema"
+import { Document, documentSchema } from "../data/schema"
 import { useDocuments } from "@/app/_context/document"
+import ViewerModalFile from "../../viewer-modal-file"
+import { Dialog } from "../../ui/dialog"
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
@@ -21,18 +23,28 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const task = documentSchema.parse(row.original)
-  const { setDocuments } = useDocuments()
+  const { setDocuments, showModalViewer, setShowModalViewer, setFileUrl } =
+    useDocuments()
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (task: Document) => {
     try {
-      await fetch(`/api/document/${id}`, {
+      const resp = await fetch(`/api/document/${task.id}`, {
         method: "DELETE",
       })
 
+      if (resp.ok) {
+        await fetch("/api/upload", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ filePath: task.fileUrl }),
+        })
+      }
+
       setDocuments((prevDocuments) =>
-        prevDocuments.filter((doc) => doc.id !== id),
+        prevDocuments.filter((doc) => doc.id !== task.id),
       )
     } catch (error) {
       console.error("Erro ao excluir documento:", error)
@@ -55,7 +67,13 @@ export function DataTableRowActions<TData>({
         align="end"
         className="flex h-[74px] w-[205px] flex-col items-start justify-center bg-white p-1"
       >
-        <DropdownMenuItem className="h-1/2 cursor-pointer py-0">
+        <DropdownMenuItem
+          className="h-1/2 cursor-pointer py-0"
+          onClick={() => {
+            setShowModalViewer(true)
+            setFileUrl(task.fileUrl)
+          }}
+        >
           <DropdownMenuShortcut className="opacity-100">
             <View size={14} color="black" />
           </DropdownMenuShortcut>
@@ -64,13 +82,15 @@ export function DataTableRowActions<TData>({
 
         <DropdownMenuItem
           className="h-1/2 cursor-pointer py-0"
-          onClick={() => handleDelete(task.id)}
+          onClick={() => handleDelete(task)}
         >
           <DropdownMenuShortcut className="opacity-100">
             <Trash size={14} color="black" />
           </DropdownMenuShortcut>
           Excluir documento
         </DropdownMenuItem>
+
+        <Dialog>{showModalViewer && <ViewerModalFile />}</Dialog>
       </DropdownMenuContent>
     </DropdownMenu>
   )

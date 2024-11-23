@@ -51,7 +51,7 @@ export async function DELETE(req: NextRequest) {
     try {
       await fs.stat(absolutePath)
     } catch {
-      return NextResponse.json({ error: "Arquivo não existe" }, { status: 404 })
+      return NextResponse.json({ message: "Arquivo não existe" })
     }
 
     await fs.unlink(absolutePath)

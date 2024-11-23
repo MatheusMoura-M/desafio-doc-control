@@ -115,6 +115,12 @@ export const columns: ColumnDef<Document>[] = [
 
       return <span>{formattedDate}</span>
     },
+    filterFn: (row, columnId, value) => {
+      const rowDate = new Date(row.getValue(columnId)).toDateString()
+      const filterDate = new Date(value).toDateString()
+
+      return rowDate === filterDate
+    },
   },
   {
     accessorKey: "updatedAt",

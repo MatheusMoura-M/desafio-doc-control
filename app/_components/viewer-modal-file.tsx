@@ -12,18 +12,56 @@ import {
   DialogTitle,
 } from "./ui/dialog"
 import { Button } from "./ui/button"
+import { useDocuments } from "../_context/document"
+import { useEffect, useState } from "react"
 
-interface ViewerModalFileProps {
-  fileName: string
-  fileUrl: string
-}
-
-const ViewerModalFile = ({ fileName, fileUrl }: ViewerModalFileProps) => {
+const ViewerModalFile = () => {
+  const { file, fileUrl } = useDocuments()
+  const [fileExists, setFileExists] = useState(false)
   const defaultLayoutPluginInstance = defaultLayoutPlugin({
     sidebarTabs: () => [],
   })
 
-  console.log("fi", fileUrl)
+  useEffect(() => {
+    const checkFileExists = async () => {
+      if (!fileUrl) return
+      try {
+        const response = await fetch(`/api/upload/${fileUrl}`)
+
+        const data = await response.json()
+        setFileExists(data.exists)
+      } catch {
+        setFileExists(false)
+      }
+    }
+    checkFileExists()
+  }, [fileUrl])
+
+  if (!fileExists) {
+    return (
+      <DialogContent className="flex h-[610px] max-w-[80%] flex-col bg-white px-6 pb-0">
+        <DialogHeader className="h-max">
+          <DialogTitle className="text-[#3A424E]">
+            Arquivo não encontrado
+          </DialogTitle>
+          <DialogDescription className="text-[#6B7280]">
+            O arquivo especificado não foi encontrado no servidor.
+          </DialogDescription>
+        </DialogHeader>
+
+        <DialogFooter className="absolute bottom-0 right-0 flex h-20 min-h-20 justify-between bg-white px-6 py-4">
+          <DialogClose asChild>
+            <Button
+              variant="outline"
+              className="h-10 rounded bg-[#05C151] text-white"
+            >
+              Fechar
+            </Button>
+          </DialogClose>
+        </DialogFooter>
+      </DialogContent>
+    )
+  }
 
   return (
     <DialogContent className="flex h-[610px] max-w-[80%] flex-col bg-white px-0 pb-0">
@@ -32,7 +70,7 @@ const ViewerModalFile = ({ fileName, fileUrl }: ViewerModalFileProps) => {
           Pré-visualização do arquivo
         </DialogTitle>
         <DialogDescription className="text-[#6B7280]">
-          {fileName}
+          {file instanceof File ? file.name : undefined}
         </DialogDescription>
       </DialogHeader>
 
