@@ -32,20 +32,6 @@ export function DataTableRowActions<TData>({
     try {
       await deleteDocument(task.id)
 
-      // const resp = await fetch(`/api/document/${task.id}`, {
-      //   method: "DELETE",
-      // })
-
-      // if (resp.ok) {
-      //   await fetch("/api/upload", {
-      //     method: "DELETE",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //     body: JSON.stringify({ filePath: task.fileUrl }),
-      //   })
-      // }
-
       setDocuments((prevDocuments) =>
         prevDocuments.filter((doc) => doc.id !== task.id),
       )
