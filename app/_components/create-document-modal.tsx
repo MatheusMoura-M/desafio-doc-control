@@ -27,6 +27,7 @@ export const CreateDocumentoModal = () => {
     setFile,
     fileUrl,
     setFileUrl,
+    user,
   } = useDocuments()
 
   const [documentSource, setDocumentSource] = useState<string>("")
@@ -108,13 +109,14 @@ export const CreateDocumentoModal = () => {
       formData.append("emitter", issuer)
       formData.append("taxValue", taxValue.toString())
       formData.append("netValue", netValue.toString())
+      formData.append("userId", user)
 
       await fetch("/api/document", {
         method: "POST",
         body: formData,
       })
 
-      const updatedDocuments = await getAllDocuments()
+      const updatedDocuments = await getAllDocuments(user)
       setDocuments(updatedDocuments)
       clearStates()
     } else {

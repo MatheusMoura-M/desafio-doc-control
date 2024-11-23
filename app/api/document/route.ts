@@ -9,6 +9,7 @@ export async function POST(req: NextRequest) {
     const formData = await req.formData()
 
     let origin = formData.get("origin") as string
+    const userId = formData.get("userId") as string
     let type = formData.get("type") as string
     const emitter = formData.get("emitter") as string
     const taxValue = new Decimal(formData.get("taxValue") as string)
@@ -35,6 +36,7 @@ export async function POST(req: NextRequest) {
         emitter,
         taxValue,
         netValue,
+        userId,
       },
     })
 

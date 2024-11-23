@@ -1,4 +1,5 @@
 "use server"
+import { revalidatePath } from "next/cache"
 import { db } from "../_lib/prisma"
 
 export const deleteDocument = async (documentId: string) => {
@@ -15,4 +16,6 @@ export const deleteDocument = async (documentId: string) => {
       },
     })
   }
+
+  revalidatePath("/")
 }

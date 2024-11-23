@@ -9,6 +9,7 @@ export interface Document {
   createdAt: Date
   origin: "DIGITALIZED" | "ELECTRONIC"
   taxValue: string
+  userId: string
   type: "SERVICE_CONTRACT" | "SERVICE_NOTE"
   updatedAt: Date
 }
@@ -24,6 +25,8 @@ interface DocumentContext {
   setFile: React.Dispatch<React.SetStateAction<File | Blob | null>>
   fileUrl: string
   setFileUrl: React.Dispatch<React.SetStateAction<string>>
+  user: string
+  setUser: React.Dispatch<React.SetStateAction<string>>
 }
 
 const DocumentContext = createContext<DocumentContext | undefined>({
@@ -37,6 +40,8 @@ const DocumentContext = createContext<DocumentContext | undefined>({
   setFile: () => {},
   fileUrl: "",
   setFileUrl: () => {},
+  user: "",
+  setUser: () => {},
 })
 
 export const DocumentProvider = ({ children }: { children: ReactNode }) => {
@@ -45,6 +50,7 @@ export const DocumentProvider = ({ children }: { children: ReactNode }) => {
   const [file, setFile] = useState<File | Blob | null>(null)
   const [fileUrl, setFileUrl] = useState<string>("")
   const [isOpenViewerFile, setIsOpenViewerFile] = useState<boolean>(false)
+  const [user, setUser] = useState<string>("")
 
   return (
     <DocumentContext.Provider
@@ -59,6 +65,8 @@ export const DocumentProvider = ({ children }: { children: ReactNode }) => {
         setFileUrl,
         isOpenViewerFile,
         setIsOpenViewerFile,
+        user,
+        setUser,
       }}
     >
       {children}

@@ -8,12 +8,13 @@ const Home = async () => {
   const { userId } = await auth()
 
   if (!userId) redirect("/login")
+
   return (
     <>
       <Header />
 
       <main className="min-h-[80vh] p-5 md:p-8 lg:pr-12">
-        <DataTablePage />
+        <DataTablePage user={userId} />
       </main>
 
       <footer className="fixed bottom-0 flex h-14 w-full items-center justify-center gap-5 bg-[#F9FAFB]">

@@ -6,6 +6,7 @@ export const documentSchema = z.object({
   emitter: z.string(),
   taxValue: z.string(),
   netValue: z.string(),
+  userId: z.string(),
   createdAt: z.date(),
   updatedAt: z.date(),
   origin: z.enum(["DIGITALIZED", "ELECTRONIC"]),

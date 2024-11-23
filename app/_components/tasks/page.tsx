@@ -6,14 +6,15 @@ import { useEffect, useState } from "react"
 import { getAllDocuments } from "@/app/_actions/get-all-documents"
 import { useDocuments } from "@/app/_context/document"
 
-const DataTablePage = () => {
+const DataTablePage = ({ user }: { user: string }) => {
   const [loading, setLoading] = useState(true)
-  const { documents, setDocuments } = useDocuments()
+  const { documents, setDocuments, setUser } = useDocuments()
 
   useEffect(() => {
     async function fetchTasks() {
       try {
-        const allDocuments = await getAllDocuments()
+        setUser(user)
+        const allDocuments = await getAllDocuments(user)
 
         setDocuments(allDocuments)
       } catch (error) {
@@ -23,7 +24,7 @@ const DataTablePage = () => {
       }
     }
     fetchTasks()
-  }, [setDocuments])
+  }, [setDocuments, setUser, user])
 
   return (
     <div className="h-full flex-1 flex-col space-y-8 md:flex">

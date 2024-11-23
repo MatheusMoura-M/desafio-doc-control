@@ -17,6 +17,7 @@ model Document {
   id        String      @id @default(uuid())
   origin    OrderOrigin
   type      OrderType
+  userId    String
   fileUrl   String
   emitter   String
   taxValue  Decimal     @db.Decimal(10, 2)

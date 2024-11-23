@@ -1,9 +1,14 @@
 "use server"
 
+import { revalidatePath } from "next/cache"
 import { db } from "../_lib/prisma"
 
-export const getAllDocuments = async () => {
-  const documents = await db.document.findMany()
+export const getAllDocuments = async (userId: string) => {
+  const documents = await db.document.findMany({
+    where: {
+      userId,
+    },
+  })
 
   const documentsWithConvertedValues = documents.map((doc) => ({
     ...doc,
@@ -13,3 +18,4 @@ export const getAllDocuments = async () => {
 
   return documentsWithConvertedValues
 }
+revalidatePath("/")
