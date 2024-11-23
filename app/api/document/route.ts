@@ -1,11 +1,8 @@
 import { db } from "@/app/_lib/prisma"
 import { OrderOrigin, OrderType } from "@prisma/client"
 import { Decimal } from "@prisma/client/runtime/library"
-import { randomUUID as uuid } from "crypto"
-import { promises as fs } from "fs"
 import { revalidatePath } from "next/cache"
 import { NextRequest } from "next/server"
-import path from "path"
 
 export async function POST(req: NextRequest) {
   try {

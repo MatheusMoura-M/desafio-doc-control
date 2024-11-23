@@ -1,12 +1,11 @@
 import { documentSchema } from "@/app/_components/tasks/data/schema"
 import { promises as fs } from "fs"
-import { NextRequest } from "next/server"
 import path from "path"
 import { z } from "zod"
 
 export const config = {
   api: {
-    bodyParser: false, // Desabilita o parser de corpo padrão do Next.js
+    bodyParser: false,
   },
 }
 
