@@ -6,19 +6,26 @@ import path from "path"
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData()
+
+    console.log("FORM2", formData)
     const file = formData.get("file")
+    console.log("FILE", file)
 
     let data: ArrayBuffer | undefined
     let fileUrl = ""
+
+    console.log("DATA", data)
 
     if (file instanceof File) {
       data = await file.arrayBuffer()
 
       if (data) {
         const directory = path.join(process.cwd(), "public")
+        console.log("directory", directory)
         await fs.mkdir(directory, { recursive: true })
 
         const uniqueFileName = `${path.parse(file.name).name}&&${uuid()}&&${path.extname(file.name)}`
+        console.log("uniqueFileName", uniqueFileName)
 
         const filePath = path.join(directory, uniqueFileName)
         await fs.writeFile(filePath, Buffer.from(data))

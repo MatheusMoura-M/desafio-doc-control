@@ -72,8 +72,6 @@ const ViewerModalFile = () => {
     )
   }
 
-  console.log("AAAAA", fileUrl)
-
   return (
     <DialogContent className="flex h-[610px] max-w-[80%] flex-col bg-white px-0 pb-0">
       <DialogHeader className="h-max px-6">
