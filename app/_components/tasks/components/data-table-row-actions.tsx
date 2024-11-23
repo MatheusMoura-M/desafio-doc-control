@@ -15,6 +15,7 @@ import { Document, documentSchema } from "../data/schema"
 import { useDocuments } from "@/app/_context/document"
 import ViewerModalFile from "../../viewer-modal-file"
 import { Dialog } from "../../ui/dialog"
+import { deleteDocument } from "@/app/_actions/delete-document"
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
@@ -29,19 +30,7 @@ export function DataTableRowActions<TData>({
 
   const handleDelete = async (task: Document) => {
     try {
-      const resp = await fetch(`/api/document/${task.id}`, {
-        method: "DELETE",
-      })
-
-      if (resp.ok) {
-        await fetch("/api/upload", {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ filePath: task.fileUrl }),
-        })
-      }
+      await deleteDocument(task.id)
 
       setDocuments((prevDocuments) =>
         prevDocuments.filter((doc) => doc.id !== task.id),
