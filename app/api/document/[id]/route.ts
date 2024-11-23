@@ -8,7 +8,12 @@ export async function DELETE(
 ) {
   try {
     const { id } = params
-
+    if (!id) {
+      return NextResponse.json(
+        { message: "ID inválido ou não fornecido" },
+        { status: 400 },
+      )
+    }
     const document = await db.document.findUnique({
       where: { id },
     })
