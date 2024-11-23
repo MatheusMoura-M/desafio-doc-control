@@ -5,11 +5,15 @@ import { DataTable } from "./components/data-table"
 import { useEffect, useState } from "react"
 import { getAllDocuments } from "@/app/_actions/get-all-documents"
 import { useDocuments } from "@/app/_context/document"
+
 interface DataTablePageProps {
-  user: string
+  searchParams: {
+    user: string
+  }
 }
 
-const DataTablePage = ({ user }: DataTablePageProps) => {
+const DataTablePage = ({ searchParams }: DataTablePageProps) => {
+  const user = searchParams.user
   const [loading, setLoading] = useState(true)
   const { documents, setDocuments, setUser } = useDocuments()
 
