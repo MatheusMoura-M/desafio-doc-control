@@ -3,7 +3,7 @@ import { auth } from "@clerk/nextjs/server"
 import { Button } from "../_components/ui/button"
 import { redirect } from "next/navigation"
 
-export const LoginPage = async () => {
+const LoginPage = async () => {
   const { userId } = await auth()
 
   if (userId) redirect("/")

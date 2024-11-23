@@ -3,7 +3,7 @@ import DataTablePage from "./_components/tasks/page"
 import { auth } from "@clerk/nextjs/server"
 import { redirect } from "next/navigation"
 
-export const Home = async () => {
+const Home = async () => {
   const { userId } = await auth()
 
   if (!userId) redirect("/login")
