@@ -23,6 +23,7 @@ const Home = async () => {
           alt="Logo footer"
           width={120}
           height={40}
+          style={{ width: "120px", height: "40px" }}
         />
         <span className="text-[#6B7280]">Copyright © 2024 e-paper</span>
       </footer>

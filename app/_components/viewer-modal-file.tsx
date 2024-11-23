@@ -86,7 +86,7 @@ const ViewerModalFile = () => {
       <div className="group mx-6 overflow-y-auto border-b pb-6">
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
           <Viewer
-            fileUrl={`/upload/${fileUrl}`}
+            fileUrl={`/${fileUrl}`}
             plugins={[defaultLayoutPluginInstance]}
           />
         </Worker>

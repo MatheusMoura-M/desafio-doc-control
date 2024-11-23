@@ -16,7 +16,7 @@ export async function GET(
       )
     }
 
-    const filePath = path.join(process.cwd(), "public/upload", fileUrl)
+    const filePath = path.join(process.cwd(), "public", fileUrl)
 
     try {
       await fs.stat(filePath)

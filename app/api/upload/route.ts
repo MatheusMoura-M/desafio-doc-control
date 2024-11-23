@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
       data = await file.arrayBuffer()
 
       if (data) {
-        const directory = path.join(process.cwd(), "public/upload")
+        const directory = path.join(process.cwd(), "public")
         await fs.mkdir(directory, { recursive: true })
 
         const uniqueFileName = `${path.parse(file.name).name}&&${uuid()}&&${path.extname(file.name)}`
@@ -46,7 +46,7 @@ export async function DELETE(req: NextRequest) {
       )
     }
 
-    const absolutePath = path.join(process.cwd(), "public/upload", filePath)
+    const absolutePath = path.join(process.cwd(), "public", filePath)
 
     try {
       await fs.stat(absolutePath)
