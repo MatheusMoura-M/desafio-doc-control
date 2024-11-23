@@ -14,8 +14,7 @@ datasource db {
 }
 
 model Document {
-  id        Int         @id @default(autoincrement())
-  name      String
+  id        String      @id @default(uuid())
   origin    OrderOrigin
   type      OrderType
   fileUrl   String

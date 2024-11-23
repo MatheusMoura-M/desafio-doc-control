@@ -1,10 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-"use client"
-
 import Header from "@/_components/header"
 import DataTablePage from "./_components/tasks/page"
+import { auth } from "@clerk/nextjs/server"
+import { redirect } from "next/navigation"
 
-export default function Home() {
+export const Home = async () => {
+  const { userId } = await auth()
+
+  if (!userId) redirect("/login")
   return (
     <>
       <Header />
@@ -15,3 +17,5 @@ export default function Home() {
     </>
   )
 }
+
+export default Home

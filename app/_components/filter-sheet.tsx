@@ -9,11 +9,12 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/_components/ui/sheet"
-import { Info } from "lucide-react"
+import { CircleCheck, Info } from "lucide-react"
 import { SetStateAction, useState } from "react"
 import { CalendarForm } from "./calendar-form"
 import { TableProps } from "./tasks/components/data-table-toolbar"
 import { Separator } from "./ui/separator"
+import { toast } from "sonner"
 
 interface FilterSheetProps {
   setDocumentName: React.Dispatch<SetStateAction<string>>
@@ -23,6 +24,7 @@ export const FilterSheet = <TData,>({
   table,
   setDocumentName,
 }: FilterSheetProps & TableProps<TData>) => {
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)
   const [documentType, setDocumentType] = useState("")
   const [issuer, setIssuer] = useState("")
   const [taxAmount, setTaxAmount] = useState("")
@@ -58,12 +60,20 @@ export const FilterSheet = <TData,>({
       issuer: issuer,
       taxAmount: taxAmount,
       netAmount: netAmount,
+      date: selectedDate,
     }
 
-    table.getColumn("tipo_documental")?.setFilterValue(data.documentType)
-    table.getColumn("emitente")?.setFilterValue(data.issuer)
-    table.getColumn("valor_total_dos_tributos")?.setFilterValue(data.taxAmount)
-    table.getColumn("valor_liquido")?.setFilterValue(data.netAmount)
+    table.getColumn("createdAt")?.setFilterValue(data.date)
+    table.getColumn("type")?.setFilterValue(data.documentType)
+    table.getColumn("emitter")?.setFilterValue(data.issuer)
+    table.getColumn("taxValue")?.setFilterValue(data.taxAmount)
+    table.getColumn("netValue")?.setFilterValue(data.netAmount)
+
+    toast("Filtro aplicado com sucesso!", {
+      className: "bg-[#05C151] text-white text-sm font-bold",
+      icon: <CircleCheck color="white" size={16} />,
+      duration: 2000,
+    })
   }
 
   return (
@@ -88,7 +98,10 @@ export const FilterSheet = <TData,>({
         </div>
 
         <div>
-          <CalendarForm />
+          <CalendarForm
+            selectedDate={selectedDate}
+            setSelectedDate={setSelectedDate}
+          />
         </div>
 
         <Separator className="mt-4 bg-[#E5E7EB]" />

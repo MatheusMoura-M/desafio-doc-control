@@ -7,7 +7,6 @@ CREATE TYPE "OrderType" AS ENUM ('SERVICE_CONTRACT', 'SERVICE_NOTE');
 -- CreateTable
 CREATE TABLE "Document" (
     "id" SERIAL NOT NULL,
-    "name" TEXT NOT NULL,
     "origin" "OrderOrigin" NOT NULL,
     "type" "OrderType" NOT NULL,
     "fileUrl" TEXT NOT NULL,

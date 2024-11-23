@@ -1,5 +1,8 @@
+import { ClerkProvider } from "@clerk/nextjs"
 import type { Metadata } from "next"
 import localFont from "next/font/local"
+import { Toaster } from "sonner"
+import { DocumentProvider } from "./_context/document"
 import "./globals.css"
 
 const geistSans = localFont({
@@ -28,7 +31,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <ClerkProvider>
+          <DocumentProvider>{children}</DocumentProvider>
+
+          <Toaster richColors />
+        </ClerkProvider>
       </body>
     </html>
   )
