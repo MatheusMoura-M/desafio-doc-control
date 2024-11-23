@@ -1,5 +1,3 @@
-import { Worker } from "@react-pdf-viewer/core"
-import { Viewer } from "@react-pdf-viewer/core"
 import "@react-pdf-viewer/core/lib/styles/index.css"
 import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout"
 import "@react-pdf-viewer/default-layout/lib/styles/index.css"
@@ -14,6 +12,17 @@ import {
 import { Button } from "./ui/button"
 import { useDocuments } from "../_context/document"
 import { useEffect, useState } from "react"
+import dynamic from "next/dynamic"
+
+const Viewer = dynamic(
+  () => import("@react-pdf-viewer/core").then((mod) => mod.Viewer),
+  { ssr: false }, // Desativa o SSR para este componente
+)
+
+const Worker = dynamic(
+  () => import("@react-pdf-viewer/core").then((mod) => mod.Worker),
+  { ssr: false },
+)
 
 const ViewerModalFile = () => {
   const { file, fileUrl } = useDocuments()

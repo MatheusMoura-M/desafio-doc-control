@@ -2,7 +2,10 @@
 
 const nextConfig = {
   webpack: (config, { isServer }) => {
-    if (!isServer) {
+    if (isServer) {
+      // Ignora a dependência de 'canvas' no lado do servidor
+      config.externals.push("canvas")
+    } else {
       config.resolve.fallback = {
         ...config.resolve.fallback,
         canvas: false,
