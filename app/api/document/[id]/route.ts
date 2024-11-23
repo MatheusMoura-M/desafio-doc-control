@@ -8,26 +8,26 @@ export async function DELETE(
 ) {
   try {
     const { id } = params
-    if (!id) {
-      return NextResponse.json(
-        { message: "ID inválido ou não fornecido" },
-        { status: 400 },
-      )
-    }
-    const document = await db.document.findUnique({
-      where: { id },
-    })
+    // if (!id) {
+    //   return NextResponse.json(
+    //     { message: "ID inválido ou não fornecido" },
+    //     { status: 400 },
+    //   )
+    // }
+    // const document = await db.document.findUnique({
+    //   where: { id },
+    // })
 
-    if (!document) {
-      return NextResponse.json(
-        { message: "Documento não encontrado" },
-        { status: 404 },
-      )
-    }
+    // if (!document) {
+    //   return NextResponse.json(
+    //     { message: "Documento não encontrado" },
+    //     { status: 404 },
+    //   )
+    // }
 
-    await db.document.delete({
-      where: { id },
-    })
+    // await db.document.delete({
+    //   where: { id },
+    // })
 
     return NextResponse.json({ message: "Documento excluído com sucesso" })
   } catch (error) {
