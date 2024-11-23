@@ -1,6 +1,6 @@
-import type { NextConfig } from "next"
+/** @type {import('next').NextConfig} */
 
-const nextConfig: NextConfig = {
+const nextConfig = {
   webpack: (config, { isServer }) => {
     if (isServer) {
       // Ignora a dependência de 'canvas' no lado do servidor
