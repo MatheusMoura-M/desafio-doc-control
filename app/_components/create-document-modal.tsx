@@ -119,7 +119,7 @@ export const CreateDocumentoModal = () => {
   }
 
   return (
-    <DialogContent className="flex h-[610px] max-w-[696px] flex-col overflow-y-auto bg-white">
+    <DialogContent className="flex h-[610px] max-w-[450px] flex-col overflow-y-auto bg-white sm:max-w-[550px] md:max-w-[696px]">
       <DialogHeader className="h-max">
         <DialogTitle>Criar novo documento</DialogTitle>
         <DialogDescription>
@@ -292,7 +292,7 @@ export const CreateDocumentoModal = () => {
           <Button
             variant="outline"
             onClick={() => handleDeleteFile(fileUrl)}
-            className="h-10"
+            className="mt-3 h-10 sm:mt-0"
           >
             Cancelar
           </Button>
