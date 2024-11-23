@@ -28,9 +28,9 @@ export function DataTableToolbar<TData>({
 
   return (
     <div className="flex items-center justify-between">
-      <div className="ml-[1px] mt-[5px] flex flex-1 items-center space-x-2">
+      <div className="ml-[1px] mt-[5px] flex flex-1 flex-col items-center sm:flex-row sm:space-x-2">
         {table.getColumn("origin") && (
-          <div className="flex flex-col gap-2">
+          <div className="flex w-full flex-col gap-2 sm:w-1/2 md:w-auto">
             <Label className="flex items-center gap-2">
               Origem do documento <CircleHelp size={14} color="gray" />
             </Label>
@@ -43,7 +43,7 @@ export function DataTableToolbar<TData>({
           </div>
         )}
         {table.getColumn("type") && (
-          <div className="flex flex-col gap-2">
+          <div className="mb-2 mt-6 flex w-full flex-col gap-2 sm:mb-0 sm:mt-0 sm:w-1/2 md:w-auto">
             <Label className="flex items-center gap-2">
               Tipo documental <CircleHelp size={14} color="gray" />
             </Label>

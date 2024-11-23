@@ -10,6 +10,9 @@ export default {
   theme: {
     extend: {
       colors: {},
+      screens: {
+        xs: "480px",
+      },
     },
   },
   plugins: [tailwindcssAnimate],

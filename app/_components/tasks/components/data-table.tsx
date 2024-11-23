@@ -33,6 +33,7 @@ import { Filter, Search } from "lucide-react"
 import { useState } from "react"
 import { DataTablePagination } from "./data-table-pagination"
 import { DataTableToolbar } from "./data-table-toolbar"
+import { Separator } from "../../ui/separator"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -85,7 +86,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between space-y-2">
+      <div className="flex flex-col items-start justify-between space-y-2 md:flex-row md:items-center">
         <div>
           <h1 className="text-xl font-semibold text-gray-800">Documentos</h1>
           <p className="truncate text-sm text-gray-500">
@@ -93,13 +94,13 @@ export function DataTable<TData, TValue>({
           </p>
         </div>
 
-        <div className="flex items-center gap-4">
-          <div className="relative w-full max-w-sm">
+        <div className="flex w-full flex-col items-start gap-4 sm:flex-row sm:items-center md:w-auto">
+          <div className="relative w-full sm:w-[80%] md:max-w-sm">
             <Input
               placeholder="Buscar documentos"
               value={documentName}
               onChange={(e) => handleDocumentNameChange(e.target.value)}
-              className="h-10 w-[150px] rounded-md border px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 md:w-[250px] lg:w-[330px]"
+              className="h-10 w-full rounded-md border px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 md:w-[250px] lg:w-[330px]"
             />
             <Search className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
           </div>
@@ -109,7 +110,7 @@ export function DataTable<TData, TValue>({
               <Button
                 size="icon"
                 variant="outline"
-                className="flex h-10 w-[93px] items-center rounded-md border px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100"
+                className="flex h-10 w-full items-center rounded-md border px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 sm:w-[20%] md:w-[93px]"
               >
                 <Filter className="mr-2 h-4 w-4" />
                 Filtrar
@@ -120,6 +121,8 @@ export function DataTable<TData, TValue>({
           </Sheet>
         </div>
       </div>
+
+      <Separator className="mt-4 bg-[#E5E7EB]" />
 
       {loading ? (
         <p>Carregando...</p>
@@ -177,7 +180,7 @@ export function DataTable<TData, TValue>({
                 )}
               </TableBody>
 
-              <TableFooter className="bg-[#F9FAFB]">
+              <TableFooter className="hidden bg-[#F9FAFB] lg:table-footer-group">
                 <TableRow>
                   <TableCell className="p-2"></TableCell>
                   <TableCell className="p-2">

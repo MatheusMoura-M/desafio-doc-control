@@ -77,10 +77,10 @@ export const FilterSheet = <TData,>({
   }
 
   return (
-    <SheetContent className="overflow-y-auto bg-white sm:max-w-[390px]">
+    <SheetContent className="max-w-[390px] overflow-y-auto bg-white">
       <SheetHeader className="space-y-0">
-        <SheetTitle>Filtrar documentos</SheetTitle>
-        <SheetDescription>
+        <SheetTitle className="text-start">Filtrar documentos</SheetTitle>
+        <SheetDescription className="text-start">
           Indique os dados necessários para realizar a filtragem
         </SheetDescription>
       </SheetHeader>

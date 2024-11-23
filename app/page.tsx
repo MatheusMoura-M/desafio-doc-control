@@ -11,7 +11,7 @@ const Home = async () => {
     <>
       <Header />
 
-      <main className="p-8 pr-12">
+      <main className="p-5 md:p-8 lg:pr-12">
         <DataTablePage />
       </main>
     </>

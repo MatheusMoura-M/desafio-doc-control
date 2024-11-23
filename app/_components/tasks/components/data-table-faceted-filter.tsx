@@ -51,7 +51,7 @@ export function DataTableFacetedFilter<TData, TValue>({
         <Button
           variant="outline"
           size="sm"
-          className={`h-9 ${column ? "w-[320px]" : "w-full"} h-10 justify-between border-solid`}
+          className={`h-9 ${column ? "w-full md:w-[320px]" : "w-full"} h-10 justify-between border-solid`}
         >
           {titleInput}
           <ChevronsUpDown />
