@@ -1,5 +1,5 @@
 import Header from "@/_components/header"
-import DataTablePage from "./_components/tasks/page"
+import DataTablePage from "./_components/_tasks/page"
 import { auth } from "@clerk/nextjs/server"
 import { redirect } from "next/navigation"
 import Image from "next/image"

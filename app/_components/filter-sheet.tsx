@@ -12,7 +12,7 @@ import {
 import { CircleCheck, Info } from "lucide-react"
 import { SetStateAction, useState } from "react"
 import { CalendarForm } from "./calendar-form"
-import { TableProps } from "./tasks/components/data-table-toolbar"
+import { TableProps } from "./_tasks/components/data-table-toolbar"
 import { Separator } from "./ui/separator"
 import { toast } from "sonner"
 

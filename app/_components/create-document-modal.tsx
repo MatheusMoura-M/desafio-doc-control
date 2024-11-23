@@ -15,8 +15,8 @@ import { useState } from "react"
 import { toast } from "sonner"
 import { getAllDocuments } from "../_actions/get-all-documents"
 import { useDocuments } from "../_context/document"
-import { DataTableFacetedFilter } from "./tasks/components/data-table-faceted-filter"
-import { originsDocument, typesDocument } from "./tasks/data/data"
+import { DataTableFacetedFilter } from "./_tasks/components/data-table-faceted-filter"
+import { originsDocument, typesDocument } from "./_tasks/data/data"
 import { Progress } from "./ui/progress"
 
 export const CreateDocumentoModal = () => {
