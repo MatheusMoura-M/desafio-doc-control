@@ -42,7 +42,8 @@ export const columns: ColumnDef<Document>[] = [
     cell: ({ row }) => {
       const value = row.getValue("fileUrl")
 
-      const formattedValue = typeof value === "string" && value.split("&&")[0]
+      const formattedValue =
+        typeof value === "string" && value.split("amazonaws.com/")[1]
 
       return (
         <span className="line-clamp-2 max-w-[200px] truncate whitespace-normal font-medium">
@@ -125,7 +126,6 @@ export const columns: ColumnDef<Document>[] = [
     },
     sortingFn: "datetime",
   },
-
   {
     accessorKey: "updatedAt",
     header: ({ column }) => (
@@ -141,7 +141,6 @@ export const columns: ColumnDef<Document>[] = [
     },
     sortingFn: "datetime",
   },
-
   {
     accessorKey: "origin",
     header: ({ column }) => (

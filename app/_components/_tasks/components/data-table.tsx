@@ -85,7 +85,9 @@ export function DataTable<TData, TValue>({
     <div className="space-y-4">
       <div className="flex flex-col items-start justify-between space-y-2 md:flex-row md:items-center">
         <div>
-          <h1 className="text-xl font-semibold text-[#3A424E]">Documentos</h1>
+          <h1 className="text-blue-lighter text-xl font-semibold">
+            Documentos
+          </h1>
           <p className="truncate text-sm text-gray-500">
             Crie, gerencie e visualize os documentos
           </p>
@@ -119,7 +121,7 @@ export function DataTable<TData, TValue>({
         </div>
       </div>
 
-      <Separator className="mt-4 bg-[#E5E7EB]" />
+      <Separator className="bg-Gray mt-4" />
 
       {loading ? (
         <p>Carregando...</p>
@@ -158,7 +160,7 @@ export function DataTable<TData, TValue>({
                       {row.getVisibleCells().map((cell) => (
                         <TableCell
                           key={cell.id}
-                          className="text-[#3A424E] [&_span]:block [&_span]:w-max"
+                          className="text-blue-lighter [&_span]:block [&_span]:w-max"
                         >
                           {flexRender(
                             cell.column.columnDef.cell,
@@ -184,17 +186,17 @@ export function DataTable<TData, TValue>({
                 <TableRow>
                   <TableCell className="p-2"></TableCell>
                   <TableCell className="p-2">
-                    <span className="block text-xs text-[#6B7280]">Total</span>
-                    <p className="text-[#3A424E]">
+                    <span className="text-Gray-blue block text-xs">Total</span>
+                    <p className="text-blue-lighter">
                       {table.getRowModel().rows.length} documentos
                     </p>
                   </TableCell>
                   <TableCell className="p-2">
-                    <span className="block w-max text-xs text-[#6B7280]">
+                    <span className="text-Gray-blue block w-max text-xs">
                       nº de emitentes
                     </span>
 
-                    <p className="text-[#3A424E]">
+                    <p className="text-blue-lighter">
                       {
                         [
                           ...new Set(
@@ -211,7 +213,7 @@ export function DataTable<TData, TValue>({
                     </p>
                   </TableCell>
                   <TableCell className="p-2">
-                    <span className="block text-xs text-[#6B7280]">
+                    <span className="text-Gray-blue block text-xs">
                       Total de tributos
                     </span>
                     <p className="text-[#3A424E]">
@@ -236,10 +238,10 @@ export function DataTable<TData, TValue>({
                     </p>
                   </TableCell>
                   <TableCell className="p-2">
-                    <span className="block text-xs text-[#6B7280]">
+                    <span className="text-Gray-blue block text-xs">
                       Total valor líquido
                     </span>
-                    <p className="text-[#3A424E]">
+                    <p className="text-blue-lighter">
                       R$
                       {table
                         .getRowModel()

@@ -18,6 +18,11 @@ import { useDocuments } from "../_context/document"
 import { DataTableFacetedFilter } from "./_tasks/components/data-table-faceted-filter"
 import { originsDocument, typesDocument } from "./_tasks/data/data"
 import { Progress } from "./ui/progress"
+import { getSignedURL } from "../_actions/aws/getSignedUrl"
+import { createDocument } from "../_actions/create-document"
+import { OrderOrigin, OrderType } from "@prisma/client"
+
+export const imgTypes = ["image/jpeg", "image/svg+xml", "image/png"]
 
 export const CreateDocumentoModal = () => {
   const {
@@ -28,6 +33,7 @@ export const CreateDocumentoModal = () => {
     fileUrl,
     setFileUrl,
     user,
+    setIsImgType,
   } = useDocuments()
 
   const [documentSource, setDocumentSource] = useState<string>("")
@@ -44,41 +50,19 @@ export const CreateDocumentoModal = () => {
       const value = event.target.files[0]
       setFile(value)
 
-      const formData = new FormData()
-      formData.append("file", value)
-
-      const resp = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      })
-
-      handleDeleteFile(fileUrl, false)
-
-      const url = await resp.json()
-      setFileUrl(url)
+      setIsImgType(imgTypes.includes(value.type))
 
       const fileSizeMB = value.size / 1024 / 1024
-
       setFileSize(parseFloat(fileSizeMB.toFixed(1)))
-    }
-  }
 
-  const handleDeleteFile = async (filePath: string, condition = true) => {
-    if (condition) {
-      clearStates()
-    }
-
-    if (file) {
-      try {
-        await fetch("/api/upload", {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ filePath }),
-        })
-      } catch (error) {
-        console.error("Error deleting file:", error)
+      if (fileUrl) {
+        URL.revokeObjectURL(fileUrl)
+      }
+      if (value) {
+        const url = URL.createObjectURL(value)
+        setFileUrl(url)
+      } else {
+        setFileUrl(undefined)
       }
     }
   }
@@ -94,33 +78,71 @@ export const CreateDocumentoModal = () => {
   }
 
   const handleSubmit = async () => {
-    if (
-      documentSource &&
-      documentType &&
-      issuer &&
-      taxValue &&
-      netValue &&
-      fileUrl
-    ) {
-      const formData = new FormData()
-      formData.append("origin", documentSource)
-      formData.append("type", documentType)
-      formData.append("fileUrl", fileUrl)
-      formData.append("emitter", issuer)
-      formData.append("taxValue", taxValue.toString())
-      formData.append("netValue", netValue.toString())
-      formData.append("userId", user)
+    try {
+      if (
+        documentSource &&
+        documentType &&
+        issuer &&
+        taxValue &&
+        netValue &&
+        file &&
+        file instanceof File
+      ) {
+        const fileData = {
+          name: file.name,
+          type: file.type,
+          size: file.size,
+        }
 
-      await fetch("/api/document", {
-        method: "POST",
-        body: formData,
-      })
+        const signedURLResult = await getSignedURL(fileData)
 
-      const updatedDocuments = await getAllDocuments(user)
-      setDocuments(updatedDocuments)
-      clearStates()
-    } else {
-      toast.error("Preencha todos os campos corretamente")
+        if (signedURLResult.failure !== undefined) {
+          throw new Error(signedURLResult.failure)
+        }
+
+        const { signedURL, urlFile } = signedURLResult.success
+
+        await fetch(signedURL, {
+          method: "PUT",
+          body: file,
+          headers: {
+            "Content-Type": file?.type,
+          },
+        })
+
+        const updatedDocumentSource =
+          documentSource === "Eletrônico"
+            ? OrderOrigin.ELECTRONIC
+            : OrderOrigin.DIGITALIZED
+
+        const updatedDocumentType =
+          documentType === "Nota fiscal de serviço"
+            ? OrderType.SERVICE_NOTE
+            : OrderType.SERVICE_CONTRACT
+
+        setDocumentSource(updatedDocumentSource)
+        setDocumentType(updatedDocumentType)
+
+        const data = {
+          origin: updatedDocumentSource as OrderOrigin,
+          type: updatedDocumentType as OrderType,
+          emitter: issuer,
+          taxValue,
+          netValue,
+          fileUrl: urlFile,
+          typeFile: file.type,
+          userId: user,
+        }
+
+        await createDocument(data)
+        const updatedDocuments = await getAllDocuments(user)
+        setDocuments(updatedDocuments)
+        clearStates()
+      } else {
+        toast.error("Preencha todos os campos corretamente")
+      }
+    } catch (error) {
+      console.log("error", error)
     }
   }
 
@@ -139,7 +161,7 @@ export const CreateDocumentoModal = () => {
             id="document-number"
             disabled
             value="0000"
-            className="h-8 w-[57px] cursor-not-allowed rounded-full bg-[#F3F4F6]"
+            className="bg-Gray-light h-8 w-[57px] cursor-not-allowed rounded-full"
           />
         </div>
 
@@ -185,7 +207,7 @@ export const CreateDocumentoModal = () => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <Label className="flex items-center gap-2 text-[#3A424E]">
+          <Label className="text-blue-lighter flex items-center gap-2">
             Origem do documento <CircleHelp size={14} color="gray" />
           </Label>
 
@@ -197,7 +219,7 @@ export const CreateDocumentoModal = () => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <Label className="flex items-center gap-2 text-[#3A424E]">
+          <Label className="text-blue-lighter flex items-center gap-2">
             Tipo documental <CircleHelp size={14} color="gray" />
           </Label>
 
@@ -209,7 +231,7 @@ export const CreateDocumentoModal = () => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <div className="flex h-[183px] items-center justify-center rounded border-2 border-dashed border-[#05C151] bg-green-50 p-4">
+          <div className="border-Green flex h-[183px] items-center justify-center rounded border-2 border-dashed bg-green-50 p-4">
             <label
               htmlFor="file-upload"
               className="flex h-full w-full cursor-pointer flex-col items-center justify-around text-center text-sm text-gray-600"
@@ -224,14 +246,14 @@ export const CreateDocumentoModal = () => {
                 Procurar e selecionar arquivo
               </Button>
 
-              <span className="mb-2 text-xs text-[#9CA3AF]">
+              <span className="text-blue-light mb-2 text-xs">
                 Tamanho max.: 10MB
               </span>
 
               <input
                 id="file-upload"
                 type="file"
-                accept=".pdf,.doc,.docx"
+                accept=".pdf,.png,.jpg,.svg"
                 onChange={handleFileUpload}
                 className="hidden"
               />
@@ -240,16 +262,16 @@ export const CreateDocumentoModal = () => {
 
           {file && file instanceof File && (
             <>
-              <div className="relative mt-6 flex items-center gap-6 rounded border py-[18.5px] pl-9">
+              <div className="relative mt-6 flex flex-col items-center gap-6 rounded border py-[18.5px] pl-9">
                 {fileSize <= 10 ? (
                   <>
                     <FileUp color="#9CA3AF" />
 
                     <div className="w-[86%]">
-                      <p className="text-sm text-[#3A424E]">
+                      <p className="text-blue-lighter text-sm">
                         Arquivo: {file.name}
                       </p>
-                      <p className="mb-2 text-xs text-[#9CA3AF]">
+                      <p className="text-blue-light mb-2 text-xs">
                         {fileSize} de 10mb
                       </p>
 
@@ -263,7 +285,6 @@ export const CreateDocumentoModal = () => {
                       onClick={() => {
                         setFile(null)
                         setShowModalViewer(false)
-                        handleDeleteFile(fileUrl)
                       }}
                     />
                   </>
@@ -278,7 +299,7 @@ export const CreateDocumentoModal = () => {
               </div>
 
               <Button
-                className="w-max cursor-pointer content-start text-sm text-[#05C151] opacity-50 shadow-none hover:opacity-100"
+                className="text-Green w-max cursor-pointer content-start text-sm opacity-50 shadow-none hover:opacity-100"
                 onClick={() => {
                   setShowModalViewer(true)
                   setFileUrl(fileUrl)
@@ -291,15 +312,11 @@ export const CreateDocumentoModal = () => {
         </div>
       </div>
 
-      <Separator className="mt-4 bg-[#E5E7EB]" />
+      <Separator className="bg-Gray mt-4" />
 
       <DialogFooter className="flex justify-between">
         <DialogClose asChild>
-          <Button
-            variant="outline"
-            onClick={() => handleDeleteFile(fileUrl)}
-            className="mt-3 h-10 sm:mt-0"
-          >
+          <Button variant="outline" className="mt-3 h-10 sm:mt-0">
             Cancelar
           </Button>
         </DialogClose>
@@ -307,7 +324,8 @@ export const CreateDocumentoModal = () => {
         <DialogClose asChild>
           <Button
             onClick={handleSubmit}
-            className="h-10 bg-[#05C151] text-white opacity-50"
+            className={`bg-Green h-10 text-white ${file ? "opacity-100" : "opacity-50"}`}
+            disabled={!file}
           >
             Criar documento
             <ArrowRight />

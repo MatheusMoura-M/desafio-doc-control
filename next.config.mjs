@@ -18,6 +18,14 @@ const nextConfig = {
       bodySizeLimit: "10mb",
     },
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "desafio-doc-control.s3.sa-east-1.amazonaws.com",
+      },
+    ],
+  },
 }
 
 export default nextConfig

@@ -9,7 +9,14 @@ export default {
   ],
   theme: {
     extend: {
-      colors: {},
+      colors: {
+        Gray: "#e5e7eb",
+        "Gray-light": "#F3F4F6",
+        "Gray-blue": "#6B7280",
+        "blue-lighter": "#3A424E",
+        "blue-light": "#9CA3AF",
+        Green: "#05C151",
+      },
       screens: {
         xs: "480px",
       },

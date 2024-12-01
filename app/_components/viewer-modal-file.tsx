@@ -1,6 +1,4 @@
-import "@react-pdf-viewer/core/lib/styles/index.css"
 import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout"
-import "@react-pdf-viewer/default-layout/lib/styles/index.css"
 import {
   DialogClose,
   DialogContent,
@@ -11,8 +9,10 @@ import {
 } from "./ui/dialog"
 import { Button } from "./ui/button"
 import { useDocuments } from "../_context/document"
-import { useEffect, useState } from "react"
 import dynamic from "next/dynamic"
+import "@react-pdf-viewer/core/lib/styles/index.css"
+import "@react-pdf-viewer/default-layout/lib/styles/index.css"
+import Image from "next/image"
 
 const Viewer = dynamic(
   () => import("@react-pdf-viewer/core").then((mod) => mod.Viewer),
@@ -25,35 +25,19 @@ const Worker = dynamic(
 )
 
 const ViewerModalFile = () => {
-  const { file, fileUrl } = useDocuments()
-  const [fileExists, setFileExists] = useState(false)
+  const { file, fileUrl, isImgType } = useDocuments()
   const defaultLayoutPluginInstance = defaultLayoutPlugin({
     sidebarTabs: () => [],
   })
 
-  useEffect(() => {
-    const checkFileExists = async () => {
-      if (!fileUrl) return
-      try {
-        const response = await fetch(`/api/upload/${fileUrl}`)
-
-        const data = await response.json()
-        setFileExists(data.exists)
-      } catch {
-        setFileExists(false)
-      }
-    }
-    checkFileExists()
-  }, [fileUrl])
-
-  if (!fileExists) {
+  if (!fileUrl) {
     return (
       <DialogContent className="flex h-[610px] max-w-[80%] flex-col bg-white px-6 pb-0">
         <DialogHeader className="h-max">
-          <DialogTitle className="text-[#3A424E]">
+          <DialogTitle className="text-blue-lighter">
             Arquivo não encontrado
           </DialogTitle>
-          <DialogDescription className="text-[#6B7280]">
+          <DialogDescription className="text-Gray-blue">
             O arquivo especificado não foi encontrado no servidor.
           </DialogDescription>
         </DialogHeader>
@@ -62,7 +46,7 @@ const ViewerModalFile = () => {
           <DialogClose asChild>
             <Button
               variant="outline"
-              className="h-10 rounded bg-[#05C151] text-white"
+              className="bg-Green h-10 rounded text-white"
             >
               Fechar
             </Button>
@@ -75,24 +59,35 @@ const ViewerModalFile = () => {
   return (
     <DialogContent className="flex h-[610px] max-w-[80%] flex-col bg-white px-0 pb-0">
       <DialogHeader className="h-max px-6">
-        <DialogTitle className="text-[#3A424E]">
+        <DialogTitle className="text-blue-lighter">
           Pré-visualização do arquivo
         </DialogTitle>
-        <DialogDescription className="text-[#6B7280]">
+        <DialogDescription className="text-Gray-blue">
           {file instanceof File ? file.name : undefined}
         </DialogDescription>
       </DialogHeader>
 
-      <div className="group mx-6 overflow-y-auto border-b pb-6">
-        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-          <Viewer
-            fileUrl={`/${fileUrl}`}
-            plugins={[defaultLayoutPluginInstance]}
+      {isImgType ? (
+        <figure className="flex flex-1 items-center justify-center">
+          <Image
+            src={fileUrl}
+            alt="Imagem para visualização"
+            className=""
+            width={420}
+            height={420}
           />
-        </Worker>
+        </figure>
+      ) : (
+        <div className="group mx-6 flex-1 overflow-y-auto border-b pb-6">
+          <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js">
+            <Viewer
+              fileUrl={fileUrl!}
+              plugins={[defaultLayoutPluginInstance]}
+            />
+          </Worker>
 
-        <style>
-          {`
+          <style>
+            {`
                 .rpv-default-layout__toolbar {
                     background-color: white;
                 }
@@ -109,14 +104,15 @@ const ViewerModalFile = () => {
                     background-color: #000;
                 }
             `}
-        </style>
-      </div>
+          </style>
+        </div>
+      )}
 
       <DialogFooter className="flex h-20 min-h-20 justify-between bg-white px-6 py-4">
         <DialogClose asChild>
           <Button
             variant="outline"
-            className="h-10 rounded bg-[#05C151] text-white"
+            className="bg-Green h-10 rounded text-white"
           >
             Fechar
           </Button>

@@ -25,7 +25,7 @@ const Home = async () => {
           height={40}
           style={{ width: "120px", height: "40px" }}
         />
-        <span className="text-[#6B7280]">Copyright © 2024 e-paper</span>
+        <span className="text-Gray-blue">Copyright © 2024 e-paper</span>
       </footer>
     </>
   )

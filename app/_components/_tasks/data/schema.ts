@@ -2,6 +2,7 @@ import { z } from "zod"
 
 export const documentSchema = z.object({
   id: z.string(),
+  typeFile: z.string(),
   fileUrl: z.string(),
   emitter: z.string(),
   taxValue: z.string(),

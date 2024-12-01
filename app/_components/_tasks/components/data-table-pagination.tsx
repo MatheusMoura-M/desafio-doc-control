@@ -4,7 +4,7 @@ import { TableProps } from "./data-table-toolbar"
 export function DataTablePagination<TData>({ table }: TableProps<TData>) {
   return (
     <div className="flex items-center justify-end py-4 md:space-x-2">
-      <div className="text-muted-foreground hidden text-sm text-[#9CA3AF] md:block">
+      <div className="text-muted-foreground text-blue-light hidden text-sm md:block">
         {table.getRowModel().rows.length} de{" "}
         {table.getFilteredRowModel().rows.length}
       </div>
@@ -15,7 +15,7 @@ export function DataTablePagination<TData>({ table }: TableProps<TData>) {
           size="sm"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
-          className="xs:w-[49%] w-[47%] md:w-auto"
+          className="w-[47%] xs:w-[49%] md:w-auto"
         >
           Anterior
         </Button>
@@ -24,7 +24,7 @@ export function DataTablePagination<TData>({ table }: TableProps<TData>) {
           size="sm"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
-          className="xs:w-[49%] w-[47%] md:w-auto"
+          className="w-[47%] xs:w-[49%] md:w-auto"
         >
           Próximo
         </Button>

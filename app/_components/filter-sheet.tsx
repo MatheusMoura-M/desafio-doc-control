@@ -70,7 +70,7 @@ export const FilterSheet = <TData,>({
     table.getColumn("netValue")?.setFilterValue(data.netAmount)
 
     toast("Filtro aplicado com sucesso!", {
-      className: "bg-[#05C151] text-white text-sm font-bold",
+      className: "bg-Green text-white text-sm font-bold",
       icon: <CircleCheck color="white" size={16} />,
       duration: 2000,
     })
@@ -85,7 +85,7 @@ export const FilterSheet = <TData,>({
         </SheetDescription>
       </SheetHeader>
 
-      <Separator className="mt-4 bg-[#E5E7EB]" />
+      <Separator className="bg-Gray mt-4" />
 
       <div className="flex flex-col gap-4 py-4">
         <div className="flex gap-4 rounded border p-4">
@@ -104,7 +104,7 @@ export const FilterSheet = <TData,>({
           />
         </div>
 
-        <Separator className="mt-4 bg-[#E5E7EB]" />
+        <Separator className="bg-Gray mt-4" />
 
         <div>
           <Label htmlFor="name" className="text-right">
@@ -158,7 +158,7 @@ export const FilterSheet = <TData,>({
           />
         </div>
 
-        <Separator className="mt-4 bg-[#E5E7EB]" />
+        <Separator className="bg-Gray mt-4" />
       </div>
 
       <SheetFooter>
@@ -176,7 +176,7 @@ export const FilterSheet = <TData,>({
         <SheetClose asChild>
           <Button
             type="submit"
-            className="bg-[#05C151] text-white opacity-50"
+            className="bg-Green text-white opacity-50"
             onClick={onSubmit}
           >
             Aplicar filtro

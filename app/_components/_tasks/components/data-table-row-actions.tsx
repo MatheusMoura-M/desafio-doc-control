@@ -16,6 +16,7 @@ import { useDocuments } from "@/app/_context/document"
 import ViewerModalFile from "../../viewer-modal-file"
 import { Dialog } from "../../ui/dialog"
 import { deleteDocument } from "@/app/_actions/delete-document"
+import { imgTypes } from "../../create-document-modal"
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
@@ -25,8 +26,13 @@ export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
   const task = documentSchema.parse(row.original)
-  const { setDocuments, showModalViewer, setShowModalViewer, setFileUrl } =
-    useDocuments()
+  const {
+    setDocuments,
+    showModalViewer,
+    setShowModalViewer,
+    setFileUrl,
+    setIsImgType,
+  } = useDocuments()
 
   const handleDelete = async (task: Document) => {
     try {
@@ -60,6 +66,7 @@ export function DataTableRowActions<TData>({
           className="h-1/2 cursor-pointer py-0"
           onClick={() => {
             setShowModalViewer(true)
+            setIsImgType(imgTypes.includes(task.typeFile))
             setFileUrl(task.fileUrl)
           }}
         >

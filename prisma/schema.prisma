@@ -19,6 +19,7 @@ model Document {
   type      OrderType
   userId    String
   fileUrl   String
+  typeFile  String
   emitter   String
   taxValue  Decimal     @db.Decimal(10, 2)
   netValue  Decimal     @db.Decimal(10, 2)
