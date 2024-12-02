@@ -31,7 +31,7 @@ export function DataTableToolbar<TData>({
       <div className="ml-[1px] mt-[5px] flex flex-1 flex-col items-center sm:flex-row sm:space-x-2">
         {table.getColumn("origin") && (
           <div className="flex w-full flex-col gap-2 sm:w-1/2 md:w-auto">
-            <Label className="text-blue-lighter flex items-center gap-2">
+            <Label className="flex items-center gap-2 text-blue-lighter">
               Origem do documento <CircleHelp size={14} color="gray" />
             </Label>
 
@@ -44,7 +44,7 @@ export function DataTableToolbar<TData>({
         )}
         {table.getColumn("type") && (
           <div className="mb-2 mt-6 flex w-full flex-col gap-2 sm:mb-0 sm:mt-0 sm:w-1/2 md:w-auto">
-            <Label className="text-blue-lighter flex items-center gap-2">
+            <Label className="flex items-center gap-2 text-blue-lighter">
               Tipo documental <CircleHelp size={14} color="gray" />
             </Label>
 
@@ -61,7 +61,7 @@ export function DataTableToolbar<TData>({
               table.resetColumnFilters()
               setDocumentName("")
             }}
-            className="border-Gray mt-6 h-8 gap-1 border px-2"
+            className="mt-6 h-8 gap-1 border border-red-400 px-2 text-red-500"
           >
             Limpar
             <X />
@@ -71,7 +71,7 @@ export function DataTableToolbar<TData>({
 
       <Dialog>
         <DialogTrigger asChild>
-          <div className="absolute bottom-40 right-6 flex h-14 w-14 items-center gap-1 self-end rounded-full bg-green-500 px-4 py-2 text-sm font-medium text-white hover:bg-green-600 lg:static lg:h-10 lg:w-[163px] lg:rounded-md">
+          <div className="absolute bottom-32 right-6 z-10 flex h-14 w-14 items-center gap-1 self-end rounded-full bg-green-500 px-4 py-2 text-sm font-medium text-white hover:bg-green-600 lg:static lg:h-10 lg:w-[163px] lg:rounded-md">
             <Plus />
             <Button className="hidden px-0 shadow-none lg:block">
               Novo documento

@@ -1,4 +1,5 @@
 "use client"
+import { OrderOrigin, OrderType } from "@prisma/client"
 import React, { createContext, ReactNode, useContext, useState } from "react"
 
 export interface Document {
@@ -8,10 +9,10 @@ export interface Document {
   typeFile: string
   netValue: string
   createdAt: Date
-  origin: "DIGITALIZED" | "ELECTRONIC"
+  origin: OrderOrigin
   taxValue: string
   userId: string
-  type: "SERVICE_CONTRACT" | "SERVICE_NOTE"
+  type: OrderType
   updatedAt: Date
 }
 
