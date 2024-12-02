@@ -147,7 +147,10 @@ export const CreateDocumentoModal = () => {
   }
 
   return (
-    <DialogContent className="flex h-[610px] max-w-[450px] flex-col overflow-y-auto bg-white sm:max-w-[550px] md:max-w-[696px]">
+    <DialogContent
+      id="new_document_modal"
+      className="flex h-[610px] max-w-[450px] flex-col overflow-y-auto bg-white sm:max-w-[550px] md:max-w-[696px]"
+    >
       <DialogHeader className="h-max">
         <DialogTitle>Criar novo documento</DialogTitle>
         <DialogDescription>
@@ -161,7 +164,7 @@ export const CreateDocumentoModal = () => {
             id="document-number"
             disabled
             value="0000"
-            className="bg-Gray-light h-8 w-[57px] cursor-not-allowed rounded-full"
+            className="h-8 w-[57px] cursor-not-allowed rounded-full bg-Gray-light"
           />
         </div>
 
@@ -207,7 +210,7 @@ export const CreateDocumentoModal = () => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <Label className="text-blue-lighter flex items-center gap-2">
+          <Label className="flex items-center gap-2 text-blue-lighter">
             Origem do documento <CircleHelp size={14} color="gray" />
           </Label>
 
@@ -219,7 +222,7 @@ export const CreateDocumentoModal = () => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <Label className="text-blue-lighter flex items-center gap-2">
+          <Label className="flex items-center gap-2 text-blue-lighter">
             Tipo documental <CircleHelp size={14} color="gray" />
           </Label>
 
@@ -231,7 +234,7 @@ export const CreateDocumentoModal = () => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <div className="border-Green flex h-[183px] items-center justify-center rounded border-2 border-dashed bg-green-50 p-4">
+          <div className="flex h-[183px] items-center justify-center rounded border-2 border-dashed border-Green bg-green-50 p-4">
             <label
               htmlFor="file-upload"
               className="flex h-full w-full cursor-pointer flex-col items-center justify-around text-center text-sm text-gray-600"
@@ -246,7 +249,7 @@ export const CreateDocumentoModal = () => {
                 Procurar e selecionar arquivo
               </Button>
 
-              <span className="text-blue-light mb-2 text-xs">
+              <span className="mb-2 text-xs text-blue-light">
                 Tamanho max.: 10MB
               </span>
 
@@ -268,10 +271,10 @@ export const CreateDocumentoModal = () => {
                     <FileUp color="#9CA3AF" />
 
                     <div className="w-[86%]">
-                      <p className="text-blue-lighter text-sm">
+                      <p className="text-sm text-blue-lighter">
                         Arquivo: {file.name}
                       </p>
-                      <p className="text-blue-light mb-2 text-xs">
+                      <p className="mb-2 text-xs text-blue-light">
                         {fileSize} de 10mb
                       </p>
 
@@ -299,7 +302,7 @@ export const CreateDocumentoModal = () => {
               </div>
 
               <Button
-                className="text-Green w-max cursor-pointer content-start text-sm opacity-50 shadow-none hover:opacity-100"
+                className="w-max cursor-pointer content-start text-sm text-Green opacity-50 shadow-none hover:opacity-100"
                 onClick={() => {
                   setShowModalViewer(true)
                   setFileUrl(fileUrl)
@@ -312,7 +315,7 @@ export const CreateDocumentoModal = () => {
         </div>
       </div>
 
-      <Separator className="bg-Gray mt-4" />
+      <Separator className="mt-4 bg-Gray" />
 
       <DialogFooter className="flex justify-between">
         <DialogClose asChild>
@@ -324,7 +327,7 @@ export const CreateDocumentoModal = () => {
         <DialogClose asChild>
           <Button
             onClick={handleSubmit}
-            className={`bg-Green h-10 text-white ${file ? "opacity-100" : "opacity-50"}`}
+            className={`h-10 bg-Green text-white ${file ? "opacity-100" : "opacity-50"}`}
             disabled={!file}
           >
             Criar documento

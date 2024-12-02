@@ -19,4 +19,31 @@ body {
   body {
     @apply bg-white;
   }
+
+  #btn_login button:focus {
+    box-shadow: none;
+  }
+
+  #container_table > div::-webkit-scrollbar,
+  #new_document_modal::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+  }
+
+  #container_table > div::-webkit-scrollbar-track,
+  #new_document_modal::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 1rem;
+  }
+
+  #container_table > div::-webkit-scrollbar-thumb,
+  #new_document_modal::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 1rem;
+  }
+
+  #container_table > div::-webkit-scrollbar-thumb:hover,
+  #new_document_modal::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.4);
+  }
 }

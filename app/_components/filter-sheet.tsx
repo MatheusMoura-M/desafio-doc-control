@@ -30,6 +30,16 @@ export const FilterSheet = <TData,>({
   const [taxAmount, setTaxAmount] = useState("")
   const [netAmount, setNetAmount] = useState("")
 
+  const isFormFilled = () => {
+    return (
+      documentType.trim() ||
+      issuer.trim() ||
+      taxAmount.trim() ||
+      netAmount.trim() ||
+      selectedDate
+    )
+  }
+
   const handleDocumentTypeChange = (value: string) => {
     setDocumentType(value)
   }
@@ -85,7 +95,7 @@ export const FilterSheet = <TData,>({
         </SheetDescription>
       </SheetHeader>
 
-      <Separator className="bg-Gray mt-4" />
+      <Separator className="mt-4 bg-Gray" />
 
       <div className="flex flex-col gap-4 py-4">
         <div className="flex gap-4 rounded border p-4">
@@ -104,14 +114,15 @@ export const FilterSheet = <TData,>({
           />
         </div>
 
-        <Separator className="bg-Gray mt-4" />
+        <Separator className="mt-4 bg-Gray" />
 
         <div>
-          <Label htmlFor="name" className="text-right">
+          <Label htmlFor="document_type" className="text-right">
             Tipo de documento
           </Label>
           <Input
-            id="name"
+            id="document_type"
+            autoComplete="off"
             value={documentType}
             placeholder="Nota fiscal de serviço"
             className="col-span-3"
@@ -120,11 +131,12 @@ export const FilterSheet = <TData,>({
         </div>
 
         <div>
-          <Label htmlFor="name" className="text-right">
+          <Label htmlFor="emitter" className="text-right">
             Emitente
           </Label>
           <Input
-            id="name"
+            id="emitter"
+            autoComplete="off"
             value={issuer}
             placeholder="Razão social do emitente"
             className="col-span-3"
@@ -133,11 +145,12 @@ export const FilterSheet = <TData,>({
         </div>
 
         <div>
-          <Label htmlFor="name" className="text-right">
+          <Label htmlFor="tax_amout" className="text-right">
             Valor total dos tributos
           </Label>
           <Input
-            id="name"
+            id="tax_amout"
+            autoComplete="off"
             value={taxAmount}
             placeholder="Valor em R$"
             className="col-span-3"
@@ -146,11 +159,12 @@ export const FilterSheet = <TData,>({
         </div>
 
         <div>
-          <Label htmlFor="name" className="text-right">
+          <Label htmlFor="net_amout" className="text-right">
             Valor líquido
           </Label>
           <Input
-            id="name"
+            id="net_amout"
+            autoComplete="off"
             value={netAmount}
             placeholder="Valor em R$"
             className="col-span-3"
@@ -158,7 +172,7 @@ export const FilterSheet = <TData,>({
           />
         </div>
 
-        <Separator className="bg-Gray mt-4" />
+        <Separator className="mt-4 bg-Gray" />
       </div>
 
       <SheetFooter>
@@ -176,7 +190,10 @@ export const FilterSheet = <TData,>({
         <SheetClose asChild>
           <Button
             type="submit"
-            className="bg-Green text-white opacity-50"
+            className={`bg-Green text-white ${
+              isFormFilled() ? "opacity-100" : "opacity-50"
+            }`}
+            disabled={!isFormFilled()}
             onClick={onSubmit}
           >
             Aplicar filtro

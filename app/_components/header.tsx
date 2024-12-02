@@ -5,15 +5,8 @@ import { Bell, ChevronDown, LayoutGrid, Menu } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "./ui/button"
-import { useRef } from "react"
 
 export default function Header() {
-  const userButtonRef = useRef<HTMLDivElement>(null)
-
-  const handleButtonClick = () => {
-    userButtonRef.current?.click()
-  }
-
   return (
     <header className="flex items-center justify-between border-b bg-white px-4 py-2 shadow-sm sm:px-6">
       <div className="flex items-center gap-3 sm:gap-[22px]">
@@ -40,14 +33,12 @@ export default function Header() {
 
         <div className="hidden items-center sm:flex">
           <Button
-            className="ml-2 pr-5 text-sm font-medium text-gray-700"
-            onClick={handleButtonClick}
+            id="btn_login"
+            className="ml-2 gap-0 pr-5 text-sm font-medium text-gray-700"
           >
-            <div ref={userButtonRef}>
-              <UserButton showName />
-            </div>
-
             <ChevronDown />
+
+            <UserButton showName />
           </Button>
         </div>
 

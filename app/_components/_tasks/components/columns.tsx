@@ -57,7 +57,11 @@ export const columns: ColumnDef<Document>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Emitente" />
     ),
-    cell: ({ row }) => <span>{row.getValue("emitter")}</span>,
+    cell: ({ row }) => (
+      <span className="line-clamp-2 max-w-[150px] truncate">
+        {row.getValue("emitter")}
+      </span>
+    ),
   },
   {
     accessorKey: "taxValue",
