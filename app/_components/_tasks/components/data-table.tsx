@@ -271,6 +271,8 @@ export function DataTable<TData, TValue>({
                   <TableCell className="p-2"></TableCell>
                   <TableCell className="p-2"></TableCell>
                   <TableCell className="p-2"></TableCell>
+                  <TableCell className="p-2"></TableCell>
+                  <TableCell className="p-2"></TableCell>
                 </TableRow>
               </TableFooter>
             </Table>
