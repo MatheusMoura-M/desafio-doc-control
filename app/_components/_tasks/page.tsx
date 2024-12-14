@@ -5,6 +5,8 @@ import { DataTable } from "./components/data-table"
 import { useEffect, useState } from "react"
 import { getAllDocuments } from "@/app/_actions/get-all-documents"
 import { useDocuments } from "@/app/_context/document"
+import { documentsJson } from "./documents"
+import { createDocument } from "@/app/_actions/create-document"
 
 interface DataTablePageProps {
   searchParams: {
@@ -21,6 +23,12 @@ const DataTablePage = ({ searchParams }: DataTablePageProps) => {
     async function fetchTasks() {
       try {
         setUser(user)
+
+        // CRIAR DOCUMENTOS DINAMICAMENTE
+        // documentsJson.forEach(async (doc) => {
+        //   await createDocument(doc)
+        // })
+
         const allDocuments = await getAllDocuments(user)
 
         setDocuments(allDocuments)

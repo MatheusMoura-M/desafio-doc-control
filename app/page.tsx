@@ -13,7 +13,7 @@ const Home = async () => {
     <>
       <Header />
 
-      <main className="min-h-[80vh] p-5 md:p-8 lg:pr-12">
+      <main className="xl2:px-0 mx-auto min-h-[80vh] max-w-screen-xl p-5 md:p-8 lg:pr-12">
         <DataTablePage searchParams={{ user: userId }} />
       </main>
 

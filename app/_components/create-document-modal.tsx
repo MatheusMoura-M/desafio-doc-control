@@ -43,6 +43,17 @@ export const CreateDocumentoModal = () => {
   const [taxValue, setTaxValue] = useState<number>(0)
   const [netValue, setNetValue] = useState<number>(0)
 
+  const isFormFilled = () => {
+    return (
+      documentSource ||
+      documentType ||
+      issuer ||
+      taxValue > 0 ||
+      netValue > 0 ||
+      file
+    )
+  }
+
   const handleFileUpload = async (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
@@ -327,8 +338,10 @@ export const CreateDocumentoModal = () => {
         <DialogClose asChild>
           <Button
             onClick={handleSubmit}
-            className={`h-10 bg-Green text-white ${file ? "opacity-100" : "opacity-50"}`}
-            disabled={!file}
+            className={`h-10 bg-Green text-white ${
+              isFormFilled() ? "opacity-100" : "opacity-50"
+            }`}
+            disabled={!isFormFilled()}
           >
             Criar documento
             <ArrowRight />

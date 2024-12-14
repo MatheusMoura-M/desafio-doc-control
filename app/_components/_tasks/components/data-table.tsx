@@ -73,6 +73,12 @@ export function DataTable<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
+    initialState: {
+      pagination: {
+        pageIndex: 0,
+        pageSize: 6,
+      },
+    },
   })
 
   const handleDocumentNameChange = (value: string) => {

@@ -46,7 +46,7 @@ export const columns: ColumnDef<Document>[] = [
         typeof value === "string" && value.split("amazonaws.com/")[1]
 
       return (
-        <span className="line-clamp-2 max-w-[200px] truncate whitespace-normal font-medium">
+        <span className="line-clamp-1 max-w-[150px] truncate whitespace-normal font-medium">
           {formattedValue}
         </span>
       )
@@ -58,7 +58,7 @@ export const columns: ColumnDef<Document>[] = [
       <DataTableColumnHeader column={column} title="Emitente" />
     ),
     cell: ({ row }) => (
-      <span className="line-clamp-2 max-w-[150px] truncate">
+      <span className="line-clamp-1 max-w-[150px] truncate">
         {row.getValue("emitter")}
       </span>
     ),
@@ -179,7 +179,11 @@ export const columns: ColumnDef<Document>[] = [
         return null
       }
 
-      return <span>{tipo.label}</span>
+      return (
+        <span className="!line-clamp-1 max-w-[140px] truncate whitespace-normal">
+          {tipo.label}
+        </span>
+      )
     },
     filterFn: (row, columnId, value) => {
       const valueFound = row.getValue(columnId)
