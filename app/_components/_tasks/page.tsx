@@ -5,8 +5,6 @@ import { DataTable } from "./components/data-table"
 import { useEffect, useState } from "react"
 import { getAllDocuments } from "@/app/_actions/get-all-documents"
 import { useDocuments } from "@/app/_context/document"
-import { documentsJson } from "./documents"
-import { createDocument } from "@/app/_actions/create-document"
 
 interface DataTablePageProps {
   searchParams: {
