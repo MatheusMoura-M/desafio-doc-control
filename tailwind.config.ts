@@ -15,7 +15,7 @@ export default {
         "Gray-blue": "#6B7280",
         "blue-lighter": "#3A424E",
         "blue-light": "#9CA3AF",
-        Green: "#05C151",
+        Blue: "#0d3f93",
       },
       screens: {
         xs: "480px",

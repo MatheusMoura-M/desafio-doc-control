@@ -245,12 +245,12 @@ export const CreateDocumentoModal = () => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <div className="flex h-[183px] items-center justify-center rounded border-2 border-dashed border-Green bg-green-50 p-4">
+          <div className="border-Blue flex h-[183px] items-center justify-center rounded border-2 border-dashed bg-blue-50 p-4">
             <label
               htmlFor="file-upload"
               className="flex h-full w-full cursor-pointer flex-col items-center justify-around text-center text-sm text-gray-600"
             >
-              <FileUp color="#05C151" />
+              <FileUp color="#2272c6" />
 
               <span className="mb-2">
                 Arraste e solte aqui ou selecione o arquivo para upload
@@ -313,7 +313,7 @@ export const CreateDocumentoModal = () => {
               </div>
 
               <Button
-                className="w-max cursor-pointer content-start text-sm text-Green opacity-50 shadow-none hover:opacity-100"
+                className="text-Blue w-max cursor-pointer content-start text-sm opacity-50 shadow-none hover:opacity-100"
                 onClick={() => {
                   setShowModalViewer(true)
                   setFileUrl(fileUrl)
@@ -338,7 +338,7 @@ export const CreateDocumentoModal = () => {
         <DialogClose asChild>
           <Button
             onClick={handleSubmit}
-            className={`h-10 bg-Green text-white ${
+            className={`bg-Blue h-10 text-white ${
               isFormFilled() ? "opacity-100" : "opacity-50"
             }`}
             disabled={!isFormFilled()}

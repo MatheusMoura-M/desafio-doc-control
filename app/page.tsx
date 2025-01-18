@@ -19,11 +19,11 @@ const Home = async () => {
 
       <footer className="fixed bottom-0 flex h-14 w-full items-center justify-center gap-5 bg-[#F9FAFB]">
         <Image
-          src="/logo_footer.png"
+          src="/logo_footer.svg"
           alt="Logo footer"
-          width={120}
+          width={40}
           height={40}
-          style={{ width: "120px", height: "40px" }}
+          style={{ width: "40px", height: "40px" }}
         />
         <span className="text-Gray-blue">Copyright © 2024 e-paper</span>
       </footer>
