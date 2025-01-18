@@ -46,7 +46,7 @@ const ViewerModalFile = () => {
           <DialogClose asChild>
             <Button
               variant="outline"
-              className="bg-Green h-10 rounded text-white"
+              className="bg-Blue h-10 rounded text-white"
             >
               Fechar
             </Button>
@@ -110,10 +110,7 @@ const ViewerModalFile = () => {
 
       <DialogFooter className="flex h-20 min-h-20 justify-between bg-white px-6 py-4">
         <DialogClose asChild>
-          <Button
-            variant="outline"
-            className="bg-Green h-10 rounded text-white"
-          >
+          <Button variant="outline" className="bg-Blue h-10 rounded text-white">
             Fechar
           </Button>
         </DialogClose>

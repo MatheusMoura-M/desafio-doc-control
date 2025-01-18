@@ -71,7 +71,7 @@ export function DataTableToolbar<TData>({
 
       <Dialog>
         <DialogTrigger asChild>
-          <div className="fixed bottom-32 right-6 z-10 flex h-14 w-14 items-center gap-1 self-end rounded-full bg-green-500 px-4 py-2 text-sm font-medium text-white hover:bg-green-600 lg:static lg:h-10 lg:w-[163px] lg:rounded-md">
+          <div className="fixed bottom-32 right-6 z-10 flex h-14 w-14 cursor-pointer items-center gap-1 self-end rounded-full bg-blue-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600 lg:static lg:h-10 lg:w-[163px] lg:rounded-md">
             <Plus />
             <Button className="hidden px-0 shadow-none lg:block">
               Novo documento

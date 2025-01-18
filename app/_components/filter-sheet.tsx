@@ -80,7 +80,7 @@ export const FilterSheet = <TData,>({
     table.getColumn("netValue")?.setFilterValue(data.netAmount)
 
     toast("Filtro aplicado com sucesso!", {
-      className: "bg-Green text-white text-sm font-bold",
+      className: "bg-Blue text-white text-sm font-bold",
       icon: <CircleCheck color="white" size={16} />,
       duration: 2000,
     })
@@ -190,7 +190,7 @@ export const FilterSheet = <TData,>({
         <SheetClose asChild>
           <Button
             type="submit"
-            className={`bg-Green text-white ${
+            className={`bg-Blue text-white ${
               isFormFilled() ? "opacity-100" : "opacity-50"
             }`}
             disabled={!isFormFilled()}

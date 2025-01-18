@@ -9,14 +9,14 @@ import { Button } from "./ui/button"
 export default function Header() {
   return (
     <header className="flex items-center justify-between border-b bg-white py-2 shadow-sm">
-      <div className="xl2:px-0 mx-auto flex w-full max-w-screen-xl items-center justify-between px-4 sm:px-6">
+      <div className="mx-auto flex w-full max-w-screen-xl items-center justify-between px-4 sm:px-6 xl2:px-0">
         <div className="flex items-center gap-3 sm:gap-[22px]">
           <button className="p-2">
             <Menu className="h-6 w-6" />
           </button>
 
           <Link href="/" className="flex items-center gap-2 sm:pl-3">
-            <Image src="/logo.png" alt="Logo" width={29} height={26} />
+            <Image src="/logo.svg" alt="Logo" width={29} height={26} />
             e-paper
           </Link>
 
